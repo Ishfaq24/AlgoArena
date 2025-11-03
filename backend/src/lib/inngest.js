@@ -17,7 +17,11 @@ const syncUser = inngest.createFunction(
       name: `${first_name} ${last_name}`,
       profileImage: image_url,
     };
+
     await User.create(newUser);
+
+    // ✅ Mark function as completed
+    return { message: "User synced successfully", clerkId: id };
   }
 );
 
@@ -28,6 +32,9 @@ const deleteUserFromDB = inngest.createFunction(
     await connectDB();
     const { id } = event.data;
     await User.findOneAndDelete({ clerkId: id });
+
+    // ✅ Mark function as completed
+    return { message: "User deleted successfully", clerkId: id };
   }
 );
 
