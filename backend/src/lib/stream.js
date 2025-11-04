@@ -1,0 +1,36 @@
+import {StreamChat} from 'stream-chat';
+import { ENV } from './env';
+
+const apiKey = ENV.STREAM_API_KEY;
+const apiSecret = ENV.STREAM_API_SECRET;
+
+
+if(!apiKey || !apiSecret) {
+  throw new Error('Stream API key and secret must be provided in environment variables.');
+  console.error('Missing STREAM_API_KEY or STREAM_API_SECRET in environment variables.');
+}
+
+
+export const chatClient = StreamChat.getInstance(apiKey, apiSecret);
+
+export const upsertStreamUser = async(userData)=>{
+    try{
+        await chatClient.upsertUser(userData);
+        console.log(`Stream user with ID ${userData.id} upserted successfully.`);
+        return userData;
+    }catch(error){
+        console.error('Error upserting Stream user:', error);
+        throw error;
+    }
+};
+
+export const deleteStreamUser = async(userId)=>{
+    try{
+        await chatClient.deleteUser(userId, { markMessagesDeleted: true }); 
+        console.log(`Stream user with ID ${userId} deleted successfully.`);
+    }catch(error){
+        console.error('Error deleting Stream user:', error);
+        throw error;
+    }
+};
+
