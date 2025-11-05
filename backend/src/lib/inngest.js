@@ -27,6 +27,8 @@ const syncUser = inngest.createFunction(
       image: newUser.profileImage,
     });
 
+    //Send a welcome email here using your email service provider
+
     return { message: "User synced successfully", clerkId: id };
   }
 );
