@@ -1,0 +1,28 @@
+* [33me76d424[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Update inngest.js
+* [33m39cba78[m Fix import statement for env.js
+* [33mccd2bf1[m Fix: add stream-chat dependency
+* [33mdfaffa0[m Integrate stream user functions into user sync and delete
+* [33mfca9f4a[m Create stream.js
+* [33me754266[m auth-sync
+* [33m79fcad2[m Remove required constraint from username field
+* [33m53bccb0[m Update inngest.js
+*   [33m1e03c2f[m Merge pull request #5 from Ishfaq24/inngest-errors-fixed
+[32m|[m[33m\[m  
+[32m|[m * [33m1c85198[m[33m ([m[1;31morigin/inngest-errors-fixed[m[33m, [m[1;32minngest-errors-fixed[m[33m)[m fixed some errors in user scheme
+* [33m|[m [33m2c7edda[m Merge pull request #4 from Ishfaq24/inngest-errors-fixed
+[34m|[m[33m\[m[33m|[m 
+[34m|[m * [33m2f1fcc6[m fixed some import errors
+* [35m|[m [33md56062d[m Merge pull request #3 from Ishfaq24/auth-db-sync
+[36m|[m[35m\[m[35m|[m 
+[36m|[m * [33mb5c9664[m[33m ([m[1;31morigin/auth-db-sync[m[33m, [m[1;32mauth-db-sync[m[33m)[m auth-db-inngest-sync
+[36m|[m[36m/[m  
+*   [33m6458864[m Merge pull request #2 from Ishfaq24/database-setup
+[1;32m|[m[1;33m\[m  
+[1;32m|[m * [33maa6d218[m[33m ([m[1;31morigin/database-setup[m[33m, [m[1;32mdatabase-setup[m[33m)[m Validation check added in db_url
+[1;32m|[m * [33mdfc9542[m db-tools set up
+[1;32m|[m[1;32m/[m  
+*   [33m3f97dd9[m Merge pull request #1 from Ishfaq24/deployment
+[1;34m|[m[1;35m\[m  
+[1;34m|[m * [33m562c8a8[m[33m ([m[1;31morigin/deployment[m[33m, [m[1;32mdeployment[m[33m)[m deployment config added
+[1;34m|[m[1;34m/[m  
+* [33m2082fa2[m initial commit

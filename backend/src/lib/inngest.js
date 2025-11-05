@@ -21,15 +21,23 @@ const syncUser = inngest.createFunction(
 
     await User.create(newUser);
 
+<<<<<<< HEAD
     // ✅ Mark function as completed
 
+=======
+>>>>>>> server-side-auth
     await upsertStreamUser({
       id: newUser.clerkId,
       name: newUser.name,
       image: newUser.profileImage,
     });
+<<<<<<< HEAD
    return { message: "User synced successfully", clerkId: id };
 
+=======
+
+    return { message: "User synced successfully", clerkId: id };
+>>>>>>> server-side-auth
   }
 );
 
@@ -45,7 +53,10 @@ const deleteUserFromDB = inngest.createFunction(
 
     await deleteStreamUser(id.toString());
     return { message: "User deleted successfully", clerkId: id };
+<<<<<<< HEAD
   
+=======
+>>>>>>> server-side-auth
   }
 );
 
