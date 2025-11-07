@@ -165,7 +165,7 @@ const HomePage = () => {
               </div>
               <h3 className="card-title">Live Code Editor</h3>
               <p className="text-base-content/70 justify-around text-center">
-                Collaborative code editor with syntax highlighting and
+                Collaborative code editor with syntax highlighting and auto-completion
               </p>
             </div>
           </div>
