@@ -19,7 +19,7 @@ const App = () => {
   return (
     <>
     <Routes>
-      <Route path="/" element={isSignedIn ? <HomePage />: <Navigate to={"/"} />}/>
+      <Route path="/" element={isSignedIn ? <HomePage />: <Navigate to={"/"} />}/> 
       <Route path="/dashboard" element={isSignedIn ? <DashboardPage />: <Navigate to={"/"} />}/>
 
       <Route path="/problems" element={isSignedIn ? <ProblemsPage /> : <Navigate to={"/"} />} />
