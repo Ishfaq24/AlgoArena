@@ -1,6 +1,7 @@
-import { Navigate, Route, Routes } from "react-router";
+import { Navigate, Route, Routes } from "react-router-dom";
 import ProblemsPage from "./Pages/ProblemsPage.jsx";
 import HomePage from "./Pages/HomePage.jsx";
+import ProblemPage from "./Pages/ProblemPage.jsx";
 import {
   SignedIn,
   SignedOut,
@@ -19,10 +20,11 @@ const App = () => {
   return (
     <>
     <Routes>
-      <Route path="/" element={isSignedIn ? <HomePage />: <Navigate to={"/"} />}/> 
+      <Route path="/" element={!isSignedIn ? <HomePage /> : <Navigate to={"/dashboard"} />} />
       <Route path="/dashboard" element={isSignedIn ? <DashboardPage />: <Navigate to={"/"} />}/>
 
       <Route path="/problems" element={isSignedIn ? <ProblemsPage /> : <Navigate to={"/"} />} />
+      <Route path="/problem/:id" element={isSignedIn ? <ProblemPage /> : <Navigate to={"/"} />} />
     </Routes>
     <Toaster toastOptions={{ duration: 3000}} />
     </>
