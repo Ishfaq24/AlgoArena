@@ -1,6 +1,6 @@
 import { TrophyIcon, UsersIcon } from "lucide-react";
 
-function StatsCards({ activeSessionsCount, recentSessionsCount }) {
+function StatsCard({ activeSessionsCount, recentSessionsCount }) {
   return (
     <div className="lg:col-span-1 grid grid-cols-1 gap-6">
       {/* Active Count */}
@@ -33,4 +33,4 @@ function StatsCards({ activeSessionsCount, recentSessionsCount }) {
   );
 }
 
-export default StatsCards;
+export default StatsCard;
