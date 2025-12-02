@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import ProblemsPage from "./Pages/ProblemsPage.jsx";
 import HomePage from "./Pages/HomePage.jsx";
 import ProblemPage from "./Pages/ProblemPage.jsx";
+import SessionPage from "./Pages/SessionPage.jsx";
 import {
   SignedIn,
   SignedOut,
