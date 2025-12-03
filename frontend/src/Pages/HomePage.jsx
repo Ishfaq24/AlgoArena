@@ -7,6 +7,7 @@ import {
   UsersIcon,
   VideoIcon,
   ZapIcon,
+  Brain
 } from "lucide-react";
 import { SignInButton } from "@clerk/clerk-react";
 
@@ -139,11 +140,11 @@ function HomePage() {
           <div className="card bg-base-100 shadow-xl">
             <div className="card-body items-center text-center">
               <div className="size-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
-                <VideoIcon className="size-8 text-primary" />
+                <Brain className="size-8 text-primary" />
               </div>
-              <h3 className="card-title">HD Video Call</h3>
+              <h3 className="card-title">AI Learning & Understanding</h3>
               <p className="text-base-content/70">
-                Crystal clear video and audio for seamless communication during interviews
+                Learn any topic through instant AI-powered explanations designed just for you.
               </p>
             </div>
           </div>
@@ -154,9 +155,9 @@ function HomePage() {
               <div className="size-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
                 <Code2Icon className="size-8 text-primary" />
               </div>
-              <h3 className="card-title">Live Code Editor</h3>
+              <h3 className="card-title">Personalized Learning</h3>
               <p className="text-base-content/70">
-                Collaborate in real-time with syntax highlighting and multiple language support
+                Your study plan evolves with your strengths, weaknesses, and progress.
               </p>
             </div>
           </div>
@@ -167,9 +168,9 @@ function HomePage() {
               <div className="size-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
                 <UsersIcon className="size-8 text-primary" />
               </div>
-              <h3 className="card-title">Easy Collaboration</h3>
+              <h3 className="card-title">Mock Tests & Practice</h3>
               <p className="text-base-content/70">
-                Share your screen, discuss solutions, and learn from each other in real-time
+                AI analyzes every answer and shows where you need improvement.
               </p>
             </div>
           </div>
