@@ -50,35 +50,34 @@ function HomePage() {
           <div className="space-y-8">
             <div className="badge badge-primary badge-lg">
               <ZapIcon className="size-4" />
-              Real-time Collaboration
+              Real-time learning collaboration
             </div>
 
             <h1 className="text-5xl lg:text-7xl font-black leading-tight">
               <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-                Code Together,
+                Learn Faster,
               </span>
               <br />
-              <span className="text-base-content">Learn Together</span>
+              <span className="text-base-content">Understand Better</span>
             </h1>
 
             <p className="text-xl text-base-content/70 leading-relaxed max-w-xl">
-              The ultimate platform for collaborative coding interviews and pair programming.
-              Connect face-to-face, code in real-time, and ace your technical interviews.
+              The ultimate platform for smart learning, personalized tutoring, and AI-generated study materials. Get clear explanations, animated video lectures, and instantly generated notes — all aligned with your syllabus
             </p>
 
             {/* FEATURE PILLS */}
             <div className="flex flex-wrap gap-3">
               <div className="badge badge-lg badge-outline">
                 <CheckIcon className="size-4 text-success" />
-                Live Video Chat
+                AI Notes Generator
               </div>
               <div className="badge badge-lg badge-outline">
                 <CheckIcon className="size-4 text-success" />
-                Code Editor
+                Animated Video Lectures
               </div>
               <div className="badge badge-lg badge-outline">
                 <CheckIcon className="size-4 text-success" />
-                Multi-Language
+                Personal Tutor
               </div>
             </div>
 
@@ -86,14 +85,14 @@ function HomePage() {
             <div className="flex flex-wrap gap-4">
               <SignInButton mode="modal">
                 <button className="btn btn-primary btn-lg">
-                  Start Coding Now
+                  🚀 Start Learning Now →
                   <ArrowRightIcon className="size-5" />
                 </button>
               </SignInButton>
 
               <button className="btn btn-outline btn-lg">
                 <VideoIcon className="size-5" />
-                Watch Demo
+                🎥 Watch Demo
               </button>
             </div>
 
@@ -130,7 +129,7 @@ function HomePage() {
             Everything You Need to <span className="text-primary font-mono">Succeed</span>
           </h2>
           <p className="text-lg text-base-content/70 max-w-2xl mx-auto">
-            Powerful features designed to make your coding interviews seamless and productive
+            Powerful features designed to make your  learning seamless and productive
           </p>
         </div>
 
