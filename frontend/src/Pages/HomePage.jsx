@@ -86,7 +86,7 @@ function HomePage() {
             <div className="flex flex-wrap gap-4">
               <SignInButton mode="modal">
                 <button className="btn btn-primary btn-lg">
-                  🚀 Start Learning Now →
+                  🚀 Start Learning Now
                   <ArrowRightIcon className="size-5" />
                 </button>
               </SignInButton>
