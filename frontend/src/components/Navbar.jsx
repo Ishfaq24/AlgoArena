@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 import {
   BookOpenIcon,
   LayoutDashboardIcon,
@@ -7,16 +8,25 @@ import {
   GraduationCapIcon,
   BotIcon,
   CodeIcon,
+  MenuIcon,
+  XIcon,
 } from "lucide-react";
 import { UserButton } from "@clerk/clerk-react";
 
 function Navbar() {
   const location = useLocation();
+  const [open, setOpen] = useState(false);
 
   const isActive = (path) => location.pathname.startsWith(path);
 
+  // Close menu when route changes
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname]);
+
   const navItem = (to, label, Icon) => (
     <Link
+      key={to}
       to={to}
       className={`px-4 py-2.5 rounded-lg transition-all duration-200
         ${
@@ -27,9 +37,7 @@ function Navbar() {
     >
       <div className="flex items-center gap-x-2.5">
         <Icon className="size-4" />
-        <span className="font-medium hidden lg:inline">
-          {label}
-        </span>
+        <span className="font-medium">{label}</span>
       </div>
     </Link>
   );
@@ -57,27 +65,46 @@ function Navbar() {
           </div>
         </Link>
 
-        {/* NAV LINKS */}
-        <div className="flex items-center gap-1">
-
+        {/* DESKTOP NAV */}
+        <div className="hidden md:flex items-center gap-1">
           {navItem("/learn", "Learn", GraduationCapIcon)}
-
           {navItem("/practice", "Practice", BrainIcon)}
-
           {navItem("/problems", "Problems", CodeIcon)}
-
           {navItem("/tests", "Tests", BookOpenIcon)}
-
           {navItem("/ai", "AI Tutor", BotIcon)}
-
           {navItem("/dashboard", "Dashboard", LayoutDashboardIcon)}
 
-          {/* USER */}
           <div className="ml-4 mt-1">
             <UserButton />
           </div>
         </div>
+
+        {/* MOBILE MENU BUTTON */}
+        <button
+          onClick={() => setOpen(!open)}
+          className="md:hidden p-2 rounded-lg hover:bg-base-200 transition"
+        >
+          {open ? <XIcon className="size-6" /> : <MenuIcon className="size-6" />}
+        </button>
       </div>
+
+      {/* MOBILE MENU */}
+      {open && (
+        <div className="md:hidden border-t border-primary/20 bg-base-100/95 backdrop-blur-md">
+          <div className="flex flex-col gap-1 p-4">
+            {navItem("/learn", "Learn", GraduationCapIcon)}
+            {navItem("/practice", "Practice", BrainIcon)}
+            {navItem("/problems", "Problems", CodeIcon)}
+            {navItem("/tests", "Tests", BookOpenIcon)}
+            {navItem("/ai", "AI Tutor", BotIcon)}
+            {navItem("/dashboard", "Dashboard", LayoutDashboardIcon)}
+
+            <div className="mt-4">
+              <UserButton />
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }

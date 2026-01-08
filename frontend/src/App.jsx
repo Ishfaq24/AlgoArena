@@ -15,7 +15,7 @@ import {
 import { Toaster } from "react-hot-toast";
 import DashboardPage from "./Pages/DashboardPage.jsx";
 import SchoolProblems from "./Pages/problems/school/SchoolProblems.jsx";
-import AItutor from "./Pages/AItutor.jsx";
+import AITutor from "./Pages/ai/AITutorPage.jsx";
 
 const App = () => {
   const { isSignedIn, isLoaded } = useUser();
@@ -26,7 +26,7 @@ const App = () => {
     <Routes>
       <Route path="/" element={!isSignedIn ? <HomePage /> : <Navigate to={"/dashboard"} />} />
       {/* //AI */}
-      <Route path="/ai" element={isSignedIn ? <AItutor /> : <Navigate to={"/"} />} />
+      <Route path="/ai" element={isSignedIn ? <AITutor /> : <Navigate to={"/"} />} />
       
       <Route path="/dashboard" element={isSignedIn ? <DashboardPage />: <Navigate to={"/"} />}/>
 
