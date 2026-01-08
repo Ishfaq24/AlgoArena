@@ -52,9 +52,9 @@ function DashboardPage() {
       <div className="min-h-screen bg-base-300">
         <Navbar />
         <WelcomeSection onCreateSession={() => setShowCreateModal(true)} />
-
+        
         {/* Grid layout */}
-        <div className="container mx-auto px-6 pb-16">
+        {/* <div className="container mx-auto px-6 pb-16">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <StatsCards
               activeSessionsCount={activeSessions.length}
@@ -65,11 +65,12 @@ function DashboardPage() {
               isLoading={loadingActiveSessions}
               isUserInSession={isUserInSession}
             />
-          </div>
+          </div> */}
 
-          <RecentSessions sessions={recentSessions} isLoading={loadingRecentSessions} />
-        </div>
+          {/* <RecentSessions sessions={recentSessions} isLoading={loadingRecentSessions} /> */}
+        {/* </div>
       </div>
+      
 
       <CreateSessionModal
         isOpen={showCreateModal}
@@ -77,8 +78,9 @@ function DashboardPage() {
         roomConfig={roomConfig}
         setRoomConfig={setRoomConfig}
         onCreateRoom={handleCreateRoom}
-        isCreating={createSessionMutation.isPending}
-      />
+        isCreating={createSessionMutation.isPending} */}
+      {/* /> */}
+      </div>
     </>
   );
 }

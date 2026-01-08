@@ -63,7 +63,7 @@ function WelcomeSection({ onCreateSession }) {
               "
             >
               <ZapIcon className="w-5 h-5 sm:w-6 sm:h-6" />
-              <span>Create Session</span>
+              <span>Continue Learning</span>
               <ArrowRightIcon className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </button>
           </div>
