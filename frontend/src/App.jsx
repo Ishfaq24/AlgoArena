@@ -17,6 +17,8 @@ import DashboardPage from "./Pages/DashboardPage.jsx";
 import SchoolProblems from "./Pages/problems/school/SchoolProblems.jsx";
 import AITutor from "./Pages/ai/AITutorPage.jsx";
 import Learn from "./Pages/learn/Learn.jsx";
+import PracticeLayout from "./Pages/PracticeLayout.jsx";
+import TestLayout from "./Pages/tests/TestLayout.jsx";
 
 const App = () => {
   const { isSignedIn, isLoaded } = useUser();
@@ -39,6 +41,10 @@ const App = () => {
 
       <Route path="/learn" element={isSignedIn ? <Learn />: <Navigate to={"/"}/>} />
 
+      <Route path="/practice" element={isSignedIn ? <PracticeLayout />: <Navigate to={"/"}/>} />
+
+
+      <Route path="/tests" element={isSignedIn ? <TestLayout />: <Navigate to={"/"}/>} />
 
        <Route path="/session/:id" element={isSignedIn ? <SessionPage /> : <Navigate to={"/"} />} />
     </Routes>
