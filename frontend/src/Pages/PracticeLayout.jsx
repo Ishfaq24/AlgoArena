@@ -1,20 +1,22 @@
 import { Link, Outlet } from "react-router-dom";
 import {
-  CodeIcon,
   GraduationCapIcon,
   BookOpenIcon,
   BrainIcon,
+  CodeIcon,
   ArrowRightIcon,
-  Section,
 } from "lucide-react";
-import Navbar from "../../components/Navbar";
-import SectionGrid from "../../components/SectionGrid.jsx";
+import Navbar from "../components/Navbar";
+import SectionGrid from "../components/SectionGrid";
 
-function ProblemsLayout() {
+
+function PracticeLayout() {
+  
 
   return (
     <section className="relative">
       <Navbar />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
 
         {/* PAGE HEADER */}
@@ -26,16 +28,16 @@ function ProblemsLayout() {
               bg-clip-text text-transparent
             "
           >
-            Problems
+            Practice
           </h1>
           <p className="text-base-content/60 mt-2 max-w-2xl">
-            Practice problems tailored to your learning goals and preferences.
+            Practice questions designed to strengthen your understanding.
           </p>
         </header>
 
-        {/* PROBLEM DOMAIN CARDS (ONLY ON /problems) */}
+        {/* PRACTICE DOMAIN CARDS (ONLY ON /practice) */}
+        
         <SectionGrid />
-
         {/* CHILD ROUTES */}
         <Outlet />
       </div>
@@ -45,4 +47,4 @@ function ProblemsLayout() {
 
 
 
-export default ProblemsLayout;
+export default PracticeLayout;
