@@ -51,7 +51,7 @@ function Navbar() {
           to="/"
           className="group flex items-center gap-3 hover:scale-105 transition-transform duration-200"
         >
-          <div className="size-10 rounded-xl bg-gradient-to-r from-primary via-secondary to-accent flex items-center justify-center shadow-lg">
+          <div className="size-10 rounded-xl bg-gradient-to-r from-sec to-primary to-accent flex items-center justify-center shadow-lg">
             <SparklesIcon className="size-6 text-white" />
           </div>
 
@@ -90,7 +90,7 @@ function Navbar() {
 
       {/* MOBILE MENU */}
       {open && (
-        <div className="md:hidden border-t border-primary/20 bg-base-100/95 backdrop-blur-md">
+        <div className="md:hidden border-t border-primary/20 bg-base-100/95 backdrop-blur-md ">
           <div className="flex flex-col gap-1 p-4">
             {navItem("/learn", "Learn", GraduationCapIcon)}
             {navItem("/practice", "Practice", BrainIcon)}

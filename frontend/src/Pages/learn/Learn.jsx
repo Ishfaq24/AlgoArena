@@ -1,51 +1,58 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import {
-  CodeIcon,
   GraduationCapIcon,
   BookOpenIcon,
   BrainIcon,
+  CodeIcon,
   ArrowRightIcon,
 } from "lucide-react";
 import Navbar from "../../components/Navbar";
 
-const PROBLEM_SECTIONS = [
+const LEARN_SECTIONS = [
   {
-    title: "Coding Problems",
-    description: "DSA, algorithms, and real coding challenges",
-    icon: CodeIcon,
-    path: "coding",
-    gradient: "from-sec to-primary",
-  },
-  {
-    title: "School Problems",
-    description: "Class-wise problems with step-by-step solutions",
-    icon: GraduationCapIcon,
+    title: "School Learning",
+    description: "Class 6–12 structured learning by subjects",
+    icon: BookOpenIcon,
     path: "school",
     gradient: "from-sec to-primary",
   },
   {
-    title: "Exam Problems",
-    description: "Previous year & exam-level questions",
-    icon: BookOpenIcon,
-    path: "exam",
+    title: "Competitive Exams",
+    description: "JEE, NEET & exam-focused preparation",
+    icon: BrainIcon,
+    path: "competitive",
     gradient: "from-sec to-primary",
   },
   {
-    title: "Aptitude & Logic",
-    description: "Quantitative & logical reasoning practice",
-    icon: BrainIcon,
-    path: "aptitude",
+    title: "Graduation",
+    description: "University-level courses & concepts",
+    icon: GraduationCapIcon,
+    path: "graduation",
     gradient: "from-sec to-primary",
   },
+  {
+    title: "Engineering ",
+    description: "Engineering topics & practical applications",
+    icon: CodeIcon,
+    path: "engineering",
+    gradient: "from-sec to-primary",
+  },
+  {
+    title: "Job Oriented ",
+    description: "UPSC, SSC, Banking & other job prep",
+    icon: BrainIcon,
+    gradient: "from-sec to-primary",
+  }
 ];
 
-function ProblemsLayout() {
+function Learn() {
   const location = useLocation();
-  const isRoot = location.pathname === "/problems";
+  const isRoot = location.pathname === "/learn";
 
   return (
     <section className="relative">
       <Navbar />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
 
         {/* PAGE HEADER */}
@@ -57,18 +64,18 @@ function ProblemsLayout() {
               bg-clip-text text-transparent
             "
           >
-            Problems
+            Learn
           </h1>
           <p className="text-base-content/60 mt-2 max-w-2xl">
-            Practice problems tailored to your learning goals and preferences.
+            Choose a learning path designed for your level and goals.
           </p>
         </header>
 
-        {/* PROBLEM DOMAIN CARDS (ONLY ON /problems) */}
+        {/* LEARN DOMAIN CARDS (ONLY ON /learn) */}
         {isRoot && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-14">
-            {PROBLEM_SECTIONS.map((section) => (
-              <ProblemSectionCard key={section.title} {...section} />
+            {LEARN_SECTIONS.map((section) => (
+              <LearnSectionCard key={section.title} {...section} />
             ))}
           </div>
         )}
@@ -80,7 +87,7 @@ function ProblemsLayout() {
   );
 }
 
-function ProblemSectionCard({
+function LearnSectionCard({
   title,
   description,
   // eslint-disable-next-line no-unused-vars
@@ -124,11 +131,11 @@ function ProblemSectionCard({
 
       {/* CTA */}
       <div className="flex items-center gap-2 text-primary font-medium text-sm">
-        Start Practice
+        Start Learning
         <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-1" />
       </div>
     </Link>
   );
 }
 
-export default ProblemsLayout;
+export default Learn;
