@@ -16,6 +16,7 @@ import { Toaster } from "react-hot-toast";
 import DashboardPage from "./Pages/DashboardPage.jsx";
 import SchoolProblems from "./Pages/problems/school/SchoolProblems.jsx";
 import AITutor from "./Pages/ai/AITutorPage.jsx";
+import Learn from "./Pages/learn/Learn.jsx";
 
 const App = () => {
   const { isSignedIn, isLoaded } = useUser();
@@ -35,6 +36,10 @@ const App = () => {
       <Route path="/problems/coding" element={isSignedIn ? <ProblemsPage /> : <Navigate to={"/"} />} />
       <Route path="/problem/:id" element={isSignedIn ? <ProblemPage /> : <Navigate to={"/"} />} />
       <Route path="/problems/school" element={isSignedIn ? <SchoolProblems/> : <Navigate to={"/"} />} />
+
+      <Route path="/learn" element={isSignedIn ? <Learn />: <Navigate to={"/"}/>} />
+
+
        <Route path="/session/:id" element={isSignedIn ? <SessionPage /> : <Navigate to={"/"} />} />
     </Routes>
     <Toaster toastOptions={{ duration: 3000}} />

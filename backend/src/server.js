@@ -23,6 +23,8 @@ app.use(express.json());
 app.use(cors({origin:ENV.CLIENT_URL,credentials:true}));
 app.use(clerkMiddleware()); 
 
+console.log("Gemini Key Loaded:", !!ENV.GEMINI_API_KEY);
+
 
 app.use('/api/inngest', serve({ client: inngest, functions }));
 app.use('/api/chat',chatRoutes)
