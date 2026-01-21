@@ -26,6 +26,7 @@ The goal is to simulate a **real, production‑grade AI chat experience** so tha
 * Typing indicator simulation
 * Smooth message animations
 * Auto‑scroll to latest message
+* Real time digital wellbeing 
 
 ### 🕘 Chat History (Frontend Simulation)
 
