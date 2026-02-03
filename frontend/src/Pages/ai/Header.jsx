@@ -24,7 +24,7 @@ export const Header = ({
         </button>
         <div className="flex flex-col min-w-0">
           <h2 className="text-sm font-semibold text-slate-200 truncate">
-            {activeThread?.title || 'Gemini Pulse'}
+            {activeThread?.title || 'AlgoArena AI'}
           </h2>
           <div className="flex items-center gap-1.5">
             <span className={`w-1.5 h-1.5 rounded-full ${isDbConnected ? 'bg-emerald-500' : 'bg-amber-500 animate-pulse'}`}></span>
@@ -41,8 +41,8 @@ export const Header = ({
           onChange={(e) => onModelChange(e.target.value)}
           className="bg-slate-900 border border-slate-800 text-[11px] font-medium text-slate-300 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all cursor-pointer appearance-none text-center min-w-[120px]"
         >
-          <option value={GeminiModel.FLASH}>Gemini 3 Flash</option>
-          <option value={GeminiModel.PRO}>Gemini 3 Pro</option>
+          <option value={GeminiModel.FLASH}>Algo 3 Flash</option>
+          <option value={GeminiModel.PRO}>Algo 3 Pro</option>
         </select>
         
         <div className="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-bold text-indigo-400 shadow-inner">
