@@ -1,12 +1,27 @@
+/* eslint-disable no-unused-vars */
+
+import React from 'react';
 import { useUser } from "@clerk/clerk-react";
 import { ArrowRightIcon, SparklesIcon, ZapIcon } from "lucide-react";
 
+/**
+ * Note: Since Clerk requires a Provider at the root, 
+ * this component will show a fallback if useUser() is called 
+ * without a surrounding <ClerkProvider />.
+ */
 function WelcomeSection({ onCreateSession }) {
-  const { user } = useUser();
+  let user = null;
+  try {
+    const clerk = useUser();
+    user = clerk.user;
+  } catch (e) {
+    // Fallback for development if Provider is missing
+    user = { firstName: "Ishfaq" };
+  }
 
   return (
     <section className="relative overflow-hidden">
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
+      <div className="relative max-w-7xl mx-auto px-0 py-10 sm:py-16">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-10">
 
           {/* LEFT SECTION */}
@@ -21,7 +36,7 @@ function WelcomeSection({ onCreateSession }) {
                   shadow-md
                 "
               >
-                <SparklesIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                <SparklesIcon className="w-5 h-5 sm:w-6 sm:h-6 text-base-100" />
               </div>
 
               <h1
@@ -37,8 +52,8 @@ function WelcomeSection({ onCreateSession }) {
               </h1>
             </div>
 
-            <p className="text-base sm:text-lg text-base-content/60 pl-0 sm:pl-14 max-w-xl">
-              Ready to level up your coding skills?
+            <p className="text-base sm:text-lg text-white/50 pl-0 sm:pl-14 max-w-xl">
+              Ready to crush your learning goals today?
             </p>
           </div>
 
@@ -53,10 +68,10 @@ function WelcomeSection({ onCreateSession }) {
                 px-5 py-3 sm:px-8 sm:py-4
                 bg-gradient-to-r from-primary to-secondary
                 rounded-2xl
-                text-white
+                text-base-100
                 font-bold
                 text-base sm:text-lg
-                shadow-lg
+                shadow-lg shadow-primary/20
                 transition-all duration-300 ease-out
                 hover:opacity-90 hover:-translate-y-0.5
                 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50

@@ -1,103 +1,37 @@
-import { Code2, Clock, Users, Trophy, Loader } from "lucide-react";
-import { getDifficultyBadgeClass } from "../lib/utils";
-import { formatDistanceToNow } from "date-fns";
 
-function RecentSessions({ sessions, isLoading }) {
+import React from 'react';
+
+const activities = [
+  { id: 1, action: 'Mastered Topic', target: 'Binary Search Trees', time: '1h ago', icon: '🌲', color: 'bg-green-500/20 text-green-400' },
+  { id: 2, action: 'Generated Notes', target: 'Graph Algorithms', time: 'Yesterday', icon: '📝', color: 'bg-blue-500/20 text-blue-400' },
+  { id: 3, action: 'AI Session Review', target: 'Space Complexity', time: '2 days ago', icon: '🧠', color: 'bg-purple-500/20 text-purple-400' },
+];
+
+const RecentSessions= () => {
   return (
-    <div className="card bg-base-100 border-2 border-accent/20 hover:border-accent/30 mt-8">
-      <div className="card-body">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="p-2 bg-gradient-to-br from-accent to-secondary rounded-xl">
-            <Clock className="w-5 h-5 text-white" />
+    <div className="bg-base-200 rounded-3xl p-8 border border-white/5 shadow-2xl">
+      <h3 className="text-xl font-bold text-white mb-8">Pulse Feed</h3>
+      <div className="space-y-8">
+        {activities.map((activity) => (
+          <div key={activity.id} className="flex gap-5 items-start group">
+            <div className={`w-12 h-12 shrink-0 rounded-2xl ${activity.color} flex items-center justify-center text-xl shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+              {activity.icon}
+            </div>
+            <div className="flex-1 border-b border-white/5 pb-6 group-last:border-0 group-last:pb-0">
+              <div className="flex justify-between items-start">
+                <p className="text-base font-bold text-white group-hover:text-primary transition-colors">{activity.action}</p>
+                <span className="text-[10px] text-white/30 font-bold uppercase tracking-widest">{activity.time}</span>
+              </div>
+              <p className="text-sm text-white/50 mt-1 font-medium">{activity.target}</p>
+            </div>
           </div>
-          <h2 className="text-2xl font-black">Your Past Sessions</h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {isLoading ? (
-            <div className="col-span-full flex items-center justify-center py-20">
-              <Loader className="w-10 h-10 animate-spin text-primary" />
-            </div>
-          ) : sessions.length > 0 ? (
-            sessions.map((session) => (
-              <div
-                key={session._id}
-                className={`card relative ${
-                  session.status === "active"
-                    ? "bg-success/10 border-success/30 hover:border-success/60"
-                    : "bg-base-200 border-base-300 hover:border-primary/30"
-                }`}
-              >
-                {session.status === "active" && (
-                  <div className="absolute top-3 right-3">
-                    <div className="badge badge-success gap-1">
-                      <div className="w-1.5 h-1.5 bg-success rounded-full animate-pulse" />
-                      ACTIVE
-                    </div>
-                  </div>
-                )}
-
-                <div className="card-body p-5">
-                  <div className="flex items-start gap-3 mb-4">
-                    <div
-                      className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                        session.status === "active"
-                          ? "bg-gradient-to-br from-success to-success/70"
-                          : "bg-gradient-to-br from-primary to-secondary"
-                      }`}
-                    >
-                      <Code2 className="w-6 h-6 text-white" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-bold text-base mb-1 truncate">{session.problem}</h3>
-                      <span
-                        className={`badge badge-sm ${getDifficultyBadgeClass(session.difficulty)}`}
-                      >
-                        {session.difficulty}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2 text-sm opacity-80 mb-4">
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4" />
-                      <span>
-                        {formatDistanceToNow(new Date(session.createdAt), {
-                          addSuffix: true,
-                        })}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Users className="w-4 h-4" />
-                      <span>
-                        {session.participant ? "2" : "1"} participant
-                        {session.participant ? "s" : ""}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between pt-3 border-t border-base-300">
-                    <span className="text-xs font-semibold opacity-80 uppercase">Completed</span>
-                    <span className="text-xs opacity-40">
-                      {new Date(session.updatedAt).toLocaleDateString()}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="col-span-full text-center py-16">
-              <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-accent/20 to-secondary/20 rounded-3xl flex items-center justify-center">
-                <Trophy className="w-10 h-10 text-accent/50" />
-              </div>
-              <p className="text-lg font-semibold opacity-70 mb-1">No sessions yet</p>
-              <p className="text-sm opacity-50">Start your coding journey today!</p>
-            </div>
-          )}
-        </div>
+        ))}
       </div>
+      <button className="w-full py-4 mt-10 text-xs font-black uppercase tracking-widest text-white/40 hover:text-primary hover:bg-white/5 border border-white/5 rounded-2xl transition-all">
+        Full Activity Archive
+      </button>
     </div>
   );
-}
+};
 
 export default RecentSessions;
