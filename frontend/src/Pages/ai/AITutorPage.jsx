@@ -6,7 +6,7 @@ import { Header } from "./Header.jsx";
 import { Role, GeminiModel } from "../../types.js";
 import { sendMessageStream } from "../../services/geminiService.js";
 import { dbService } from "../../services/dbService.js";
-import Navbar from "../../Components/Navbar.jsx";
+import Navbar from "../../components/Navbar.jsx";
 
 const NAVBAR_HEIGHT = 64; // h-16
 
