@@ -89,7 +89,7 @@ const PracticeConfig = () => {
                 className="w-full px-6 py-4 rounded-2xl border border-primary/20 bg-base-100 focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none transition-all text-base-content font-medium placeholder-muted/30"
               />
               <p className="text-[10px] text-muted mt-3 font-semibold uppercase tracking-wider">
-                Gemini AI will generate topic-specific questions
+                AlgoArena AI will generate topic-specific questions
               </p>
             </div>
 
