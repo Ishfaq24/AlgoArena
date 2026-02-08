@@ -10,7 +10,6 @@ import {
   Sparkles,
   Cpu,
 } from "lucide-react";
-import Navbar from '../../components/Navbar.jsx';
 
 /* ---------- DATA ---------- */
 
@@ -139,8 +138,6 @@ const TestSectionCard = ({
 
 const TestsLayout = () => {
   return (
-    <>
-    <Navbar />
     <section className="relative min-h-[calc(100vh-120px)] animate-in fade-in slide-in-from-bottom-8 duration-1000">
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/4 -left-20 size-[500px] bg-primary/5 blur-[120px] rounded-full opacity-30" />
@@ -210,7 +207,6 @@ const TestsLayout = () => {
         }
       `}</style>
     </section>
-    </>
   );
 };
 
