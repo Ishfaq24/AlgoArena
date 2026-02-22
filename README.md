@@ -1,5 +1,5 @@
 # 🤖 AI Tutor (ChatGPT‑like UI/UX)
-
+# Online mocktest
 A **frontend‑only AI Tutor module** inspired by ChatGPT, built as part of the **HackHub / learning platform**.
 This project focuses **purely on UI/UX and client‑side behavior** — **no real AI or OpenAI API is used**.
 
