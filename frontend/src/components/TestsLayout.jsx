@@ -10,7 +10,6 @@ import {
   Sparkles,
   Cpu,
 } from "lucide-react";
-import Navbar from '../../components/Navbar.jsx';
 
 /* ---------- DATA ---------- */
 
@@ -139,8 +138,6 @@ const TestSectionCard = ({
 
 const TestsLayout = () => {
   return (
-    <>
-    <Navbar />
     <section className="relative min-h-[calc(100vh-120px)] animate-in fade-in slide-in-from-bottom-8 duration-1000">
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/4 -left-20 size-[500px] bg-primary/5 blur-[120px] rounded-full opacity-30" />
@@ -151,7 +148,7 @@ const TestsLayout = () => {
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6 animate-bounce">
           <Sparkles className="size-4 text-primary" />
           <span className="text-[10px] font-display font-black text-primary uppercase tracking-[0.25em]">
-            Powered by AlgoArena V.1 Pro
+            Powered by Gemini 3 Pro
           </span>
         </div>
 
@@ -210,7 +207,6 @@ const TestsLayout = () => {
         }
       `}</style>
     </section>
-    </>
   );
 };
 
