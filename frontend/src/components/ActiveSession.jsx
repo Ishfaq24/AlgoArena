@@ -1,13 +1,47 @@
 
 import React from 'react';
 
-const sessions = [
-  { id: 's1', title: 'Organic Chemistry: Hydrocarbons', subject: 'Science', type: 'Course', progress: 65, lastActive: '12m ago', status: 'active' },
-  { id: 's2', title: 'UPSC Mock: Indian Polity', subject: 'Civics', type: 'Mock Test', progress: 15, lastActive: '1h ago', status: 'paused' },
-  { id: 's3', title: 'CBSE 10th: Quadratic Equations', subject: 'Math', type: 'MCQ', progress: 88, lastActive: 'Yesterday', status: 'paused' },
-];
+const formatTimeAgo = (date) => {
+  if (!date) return 'Just now';
+  const now = new Date();
+  const past = new Date(date);
+  const diffMs = now - past;
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+  
+  if (diffMins < 60) return `${diffMins}m ago`;
+  if (diffHours < 24) return `${diffHours}h ago`;
+  if (diffDays === 1) return 'Yesterday';
+  return `${diffDays} days ago`;
+};
 
-const ActiveSessions= () => {
+const ActiveSessions = ({ sessions: propSessions, isLoading }) => {
+  const defaultSessions = [
+    { id: 's1', title: 'Organic Chemistry: Hydrocarbons', subject: 'Science', type: 'Course', progress: 65, lastActive: '12m ago', status: 'active' },
+    { id: 's2', title: 'UPSC Mock: Indian Polity', subject: 'Civics', type: 'Mock Test', progress: 15, lastActive: '1h ago', status: 'paused' },
+    { id: 's3', title: 'CBSE 10th: Quadratic Equations', subject: 'Math', type: 'MCQ', progress: 88, lastActive: 'Yesterday', status: 'paused' },
+  ];const sessions = propSessions || defaultSessions;
+
+  if (isLoading) {
+    return (
+      <div className="bg-base-200 rounded-3xl p-8 border border-white/5 shadow-2xl">
+        <div className="flex justify-between items-center mb-8">
+          <h3 className="text-xl font-bold text-white">Active Learning</h3>
+        </div>
+        <div className="space-y-6">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="p-5 rounded-2xl border border-white/5 bg-white/5 animate-pulse">
+              <div className="h-4 w-32 bg-white/10 rounded mb-3"></div>
+              <div className="h-5 w-48 bg-white/10 rounded mb-4"></div>
+              <div className="w-full bg-white/5 rounded-full h-2"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-base-200 rounded-3xl p-8 border border-white/5 shadow-2xl">
       <div className="flex justify-between items-center mb-8">
@@ -30,7 +64,7 @@ const ActiveSessions= () => {
             <div className="mt-6">
               <div className="flex justify-between text-xs font-semibold text-white/40 mb-2">
                 <span>{session.progress}% Complete</span>
-                <span>{session.lastActive}</span>
+                <span>{formatTimeAgo(session.lastActive)}</span>
               </div>
               <div className="w-full bg-white/5 rounded-full h-2 overflow-hidden">
                 <div 

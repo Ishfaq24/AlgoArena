@@ -1,10 +1,10 @@
 
 import React from 'react';
 
-const StatsCards = ({ path }) => {
+const StatsCards = ({ path, stats: propStats, isLoading }) => {
   const isExamPath = ['JEE/NEET', 'UPSC/Civil Services', 'Job Exams (Banking/SSC)'].includes(path);
   
-  const stats = [
+  const defaultStats = [
     { 
       label: isExamPath ? 'Exam Readiness' : 'Curriculum Progress', 
       value: isExamPath ? '72%' : '84%', 
@@ -15,6 +15,21 @@ const StatsCards = ({ path }) => {
     { label: 'Active Retention', value: '68%', change: '-1.5%', trend: 'down' },
     { label: 'AI Summaries', value: '428', change: '+12', trend: 'up' }
   ];
+
+  const stats = propStats || defaultStats;
+
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {[...Array(4)].map((_, i) => (
+          <div key={i} className="bg-base-200 p-6 rounded-3xl border border-white/5 animate-pulse">
+            <div className="h-4 w-20 bg-white/10 rounded mb-4"></div>
+            <div className="h-8 w-16 bg-white/10 rounded"></div>
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
