@@ -13,6 +13,8 @@ import { inngest,functions } from './lib/inngest.js';
 import chatRoutes from './routes/chatRoutes.js';
 import sessionRoutes from './routes/sessionRoutes.js';
 import aiRoutes from "./routes/ai.routes.js";
+import dashboardRoutes from "./routes/dashboard.routes.js";
+import testRoutes from "./routes/testRoutes.js";
 
 const app = express();
 
@@ -30,6 +32,8 @@ app.use('/api/inngest', serve({ client: inngest, functions }));
 app.use('/api/chat',chatRoutes)
 app.use('/api/sessions',sessionRoutes)
 app.use("/api/ai", aiRoutes);
+app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/tests", testRoutes);
 
 
 app.get('/health', (req, res) => {

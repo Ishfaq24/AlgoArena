@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Loader2, Sparkles, BookOpen } from 'lucide-react';
-import { generateMockTest } from '../services/geminiService';
+import { testApi } from '../api/tests';
 
 const PracticeConfig = () => {
   const { domain } = useParams();
@@ -24,7 +24,7 @@ const PracticeConfig = () => {
     setError('');
 
     try {
-      const mockTest = await generateMockTest(
+      const { test: mockTest } = await testApi.generateTest(
         domain || 'General',
         topic,
         questionCount

@@ -35,10 +35,11 @@ export const sendMessageStream = async (
 };
 
 export const generateMockTest = async (domain, topic, count = 10) => {
-  // Initialize Gemini AI with API key
-  
-const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_API_KEY || '' });
-
+  // Check for API key
+  const apiKey = import.meta.env.VITE_API_KEY;
+  if (!apiKey) {
+    throw new Error('API key not configured. Please add VITE_API_KEY to your .env file.');
+  }
 
   const prompt = `
 Generate a high-quality mock test for the domain "${domain}" on the specific topic "${topic}".
@@ -50,60 +51,48 @@ Each question must have:
 
 The difficulty should be appropriate for ${domain} level practice.
 
-Respond strictly in valid JSON.
+Respond strictly in valid JSON with this format:
+{"testTitle": "...", "questions": [{"text": "...", "options": ["...", "...", "...", "..."], "correctAnswerIndex": 0, "explanation": "..."}]}
 `;
 
-  const response = await ai.models.generateContent({
-    model: 'gemini-3-pro-preview',
-    contents: prompt,
-    config: {
-      responseMimeType: 'application/json',
-      responseSchema: {
-        type: 'object',
-        properties: {
-          testTitle: { type: 'string' },
-          questions: {
-            type: 'array',
-            items: {
-              type: 'object',
-              properties: {
-                text: { type: 'string' },
-                options: {
-                  type: 'array',
-                  items: { type: 'string' },
-                },
-                correctAnswerIndex: { type: 'integer' },
-                explanation: { type: 'string' },
-              },
-              required: [
-                'text',
-                'options',
-                'correctAnswerIndex',
-                'explanation',
-              ],
-            },
-          },
-        },
-        required: ['testTitle', 'questions'],
+  try {
+    const response = await ai.models.generateContent({
+      model: 'gemini-1.5-flash',
+      contents: prompt,
+      config: {
+        responseMimeType: 'application/json',
       },
-    },
-  });
+    });
 
-  // Gemini returns JSON as text
-  const jsonStr = response.text?.trim() || '{}';
-  const data = JSON.parse(jsonStr);
+    // Gemini returns JSON as text
+    const jsonStr = response.text?.trim() || '{}';
+    const data = JSON.parse(jsonStr);
 
-  const questions = (data.questions || []).map((q, idx) => ({
-    ...q,
-    id: `q-${idx}`,
-  }));
+    if (!data.questions || data.questions.length === 0) {
+      throw new Error('No questions were generated. Please try a different topic.');
+    }
 
-  return {
-    id: `test-${Date.now()}`,
-    title: data.testTitle || `${topic} Practice Set`,
-    domain,
-    topic,
-    questions,
-    createdAt: Date.now(),
-  };
+    const questions = (data.questions || []).map((q, idx) => ({
+      ...q,
+      id: `q-${idx}`,
+    }));
+
+    return {
+      id: `test-${Date.now()}`,
+      title: data.testTitle || `${topic} Practice Set`,
+      domain,
+      topic,
+      questions,
+      createdAt: Date.now(),
+    };
+  } catch (error) {
+    console.error('Test generation error:', error);
+    if (error.message?.includes('API key')) {
+      throw new Error('Invalid API key. Please check your VITE_API_KEY in .env file.');
+    }
+    if (error.message?.includes('quota') || error.message?.includes('rate limit')) {
+      throw new Error('API quota exceeded. Please try again later.');
+    }
+    throw error;
+  }
 };

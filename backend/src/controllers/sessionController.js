@@ -1,5 +1,6 @@
 import { chatClient, streamClient } from "../lib/stream.js";
 import Session from "../models/Session.js";
+import User from "../models/User.js";
 
 export async function createSession(req, res) {
   try {
@@ -16,6 +17,23 @@ export async function createSession(req, res) {
 
     // create session in db
     const session = await Session.create({ problem, difficulty, host: userId, callId });
+
+    // Add activity for session creation
+    await User.findByIdAndUpdate(userId, {
+      $push: {
+        activities: {
+          $each: [{
+            action: 'Started Session',
+            target: problem,
+            icon: '🎯',
+            time: new Date()
+          }],
+          $position: 0,
+          $slice: 20
+        }
+      },
+      $inc: { 'stats.totalSessions': 1 }
+    });
 
     // create stream video call
     await streamClient.video.call("default", callId).getOrCreate({
@@ -155,6 +173,26 @@ export async function endSession(req, res) {
 
     session.status = "completed";
     await session.save();
+
+    // Add activity for session completion and update stats
+    await User.findByIdAndUpdate(userId, {
+      $push: {
+        activities: {
+          $each: [{
+            action: 'Completed Session',
+            target: session.problem,
+            icon: '✅',
+            time: new Date()
+          }],
+          $position: 0,
+          $slice: 20
+        }
+      },
+      $inc: { 
+        'stats.completedSessions': 1,
+        'stats.studyHours': 1.5 // Estimate 1.5 hours per session
+      }
+    });
 
     res.status(200).json({ session, message: "Session ended successfully" });
   } catch (error) {
