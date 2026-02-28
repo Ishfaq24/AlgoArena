@@ -33,7 +33,8 @@ const PracticeConfig = () => {
       navigate('/test', { state: { mockTest } });
     } catch (err) {
       console.error(err);
-      setError('Failed to generate test. Please check your API key or connection.');
+      const errorMessage = err.response?.data?.message || err.message || 'Failed to generate test. Please try again.';
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }

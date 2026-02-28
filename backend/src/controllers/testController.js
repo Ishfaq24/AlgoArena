@@ -1,21 +1,27 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { ENV } from "../lib/env.js";
 
-const genAI = new GoogleGenerativeAI(ENV.GEMINI_API_KEY);
+// Use the v1 API endpoint
+const genAI = new GoogleGenerativeAI({
+  apiKey: ENV.GEMINI_API_KEY,
+});
 
 export const generateTest = async (req, res) => {
   try {
     const { domain, topic, count = 10 } = req.body;
+    console.log("Test generation request:", { domain, topic, count });
 
     if (!domain || !topic) {
       return res.status(400).json({ message: "Domain and topic are required" });
     }
 
+    console.log("GEMINI_API_KEY present:", !!ENV.GEMINI_API_KEY);
     if (!ENV.GEMINI_API_KEY) {
       return res.status(500).json({ message: "API key not configured on server" });
     }
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    // Try gemini-2.0-flash-exp which is the experimental model
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
 
     const prompt = `
 Generate a high-quality mock test for the domain "${domain}" on the specific topic "${topic}".
