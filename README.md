@@ -1,189 +1,183 @@
-# 🤖 AI Tutor (ChatGPT‑like UI/UX)
+# AlgoArena
 
-A **frontend‑only AI Tutor module** inspired by ChatGPT, built as part of the **HackHub / learning platform**.
-This project focuses **purely on UI/UX and client‑side behavior** — **no real AI or OpenAI API is used**.
+AlgoArena is a full-stack practice platform for coding, mock tests, interview-style sessions, and AI-powered learning workflows.
 
-The goal is to simulate a **real, production‑grade AI chat experience** so that backend/AI logic can be plugged in later when resources allow.
+This repository currently contains:
 
----
+- A React + Vite frontend
+- An Express + MongoDB backend API
+- A FastAPI-based ML/video-generation service (Manim + LLM + narration)
 
-## ✨ Key Highlights
+## Architecture
 
-* ChatGPT‑style chat interface
-* Persistent chat history (frontend only)
-* Clean, modern UI aligned with other platform pages
-* Fully responsive layout
-* Modular & scalable React architecture
-* Zero backend dependency
+- Frontend (`frontend/`): React 18 app (Vite) with Clerk auth, session UI, AI tutor views, dashboard, tests, and video call screens.
+- Backend (`backend/src/`): Express API with Clerk-protected routes, MongoDB models, Gemini integration, Stream token endpoint, and dashboard/test/session APIs.
+- ML service (`ml-services/`): FastAPI service that generates Manim scenes and rendered videos from a topic.
 
----
+For detailed design notes, see `ARCHITECTURE.md`.
 
-## 🚀 Features
+## Repository Layout
 
-### 🧠 AI‑Like Chat Experience (UI Only)
+```text
+AlgoArena/
+|- ARCHITECTURE.md
+|- package.json
+|- README.md
+|- backend/
+|  |- package.json
+|  |- requirements.txt
+|  |- src/                 # Node/Express backend
+|  |- app/                 # Python FastAPI app (mirrors ml-services)
+|  |- generated/
+|  |- media/
+|  \- test_nvidia_api.py
+|- frontend/
+|  |- package.json
+|  \- src/
+\- ml-services/
+   |- requirements.txt
+   |- app/                 # FastAPI video generation API
+   |- generated/
+   \- media/
+```
 
-* Chat bubbles (User vs AI)
-* Typing indicator simulation
-* Smooth message animations
-* Auto‑scroll to latest message
-* Real time digital wellbeing 
+## Tech Stack
 
-### 🕘 Chat History (Frontend Simulation)
+- Frontend: React, Vite, Tailwind CSS, DaisyUI, React Query, Monaco Editor, Stream Video SDK
+- Backend: Node.js, Express, Mongoose, Clerk, Gemini, Inngest, Stream Chat
+- ML service: FastAPI, Uvicorn, Manim, Google Generative AI, gTTS/pyttsx3
+- Database: MongoDB
 
-* Chats persist using **LocalStorage**
-* Each conversation has:
+## Prerequisites
 
-  * Unique chat ID
-  * Timestamp
-  * Message history
-* Ability to:
+- Node.js 18+
+- npm 9+
+- Python 3.10+
+- MongoDB instance (local or cloud)
+- Manim runtime dependencies installed on your machine
 
-  * Start a new chat
-  * Switch between old chats
-  * Clear chat history
+## Environment Variables
 
-> ⚠️ No real AI responses — replies are mocked / placeholder based.
+Create the following environment files before running services.
 
----
+### `backend/.env`
 
-## 🧱 Tech Stack
+```env
+PORT=3000
+DB_URL=<mongodb_connection_string>
+CLIENT_URL=http://localhost:5173
+NODE_ENV=development
 
-### Frontend
+CLERK_PUBLISHABLE_KEY=<clerk_publishable_key>
+CLERK_SECRET_KEY=<clerk_secret_key>
 
-* **React.js**
-* **React Router DOM**
-* **Tailwind CSS**
-* **Lucide Icons**
+GEMINI_API_KEY=<gemini_api_key>
 
-### Auth (Platform‑Level)
+STREAM_API_KEY=<stream_api_key>
+STREAM_API_SECRET=<stream_api_secret>
 
-* **Clerk Authentication** (UserButton, user session handling)
+INNGEST_EVENT_KEY=<inngest_event_key>
+INNGEST_SIGNING_KEY=<inngest_signing_key>
+```
 
-### 4. Run the Application
+### `frontend/.env`
 
-#### Development Mode (Recommended)
+```env
+VITE_API_BASE_URL=http://localhost:3000/api
+VITE_CLERK_PUBLISHABLE_KEY=<clerk_publishable_key>
+VITE_STREAM_API_KEY=<stream_api_key>
+VITE_API_KEY=<gemini_api_key>
+```
 
-Open two terminal windows:
+### `ml-services/.env` (if required by your LLM/voice setup)
 
-**Terminal 1 - Backend:**
+```env
+GEMINI_API_KEY=<gemini_api_key>
+```
+
+## Local Development
+
+Run services in separate terminals.
+
+### 1) Backend API (Express)
+
 ```bash
 cd backend
+npm install
 npm run dev
 ```
-Server runs on http://localhost:3000
 
-**Terminal 2 - Frontend:**
+Backend runs at `http://localhost:3000`.
+
+### 2) Frontend (React + Vite)
+
 ```bash
 cd frontend
+npm install
 npm run dev
 ```
-Client runs on http://localhost:5173
 
-#### Production Mode
+Frontend runs at `http://localhost:5173`.
 
-```bash
-# Build frontend
-cd frontend && npm run build
-
-# Start backend (serves both API and static files)
-cd ../backend && npm start
-```
-
----
-
-## 📁 Project Structure (Simplified)
-
-```
-src/
-│── components/
-│   ├── Navbar.jsx
-│   ├── Sidebar.jsx
-│   ├── ChatWindow.jsx
-│   ├── ChatInput.jsx
-│   └── MessageBubble.jsx
-│
-│── pages/
-│   └── AITutor.jsx
-│
-│── utils/
-│   └── chatStorage.js
-│
-│── App.jsx
-│── main.jsx
-```
-
----
-
-## 🧩 UI/UX Design Goals
-
-* Match the **existing platform design language**
-* Keep layout consistent with other pages
-* Avoid clutter — focus on learning flow
-* Mobile‑first responsive design
-* Sidebar‑based chat navigation (like ChatGPT)
-
----
-
-## 🛠️ How It Works (Frontend Logic)
-
-1. User sends a message
-2. Message is stored in state + localStorage
-3. Mock AI response is generated
-4. Chat UI updates in real‑time
-5. Full conversation persists on refresh
-
----
-
-## ❌ What This Project Does NOT Include
-
-* ❌ No OpenAI / AI APIs
-* ❌ No backend or database
-* ❌ No real AI intelligence
-
-> This is **intentional** due to API cost constraints.
-
----
-
-## 🔮 Future Enhancements
-
-* Plug in real AI (OpenAI / local LLM)
-* Backend‑powered chat persistence
-* Chat folders & search
-* Code block execution
-* Markdown rendering
-* Voice input
-
----
-
-## 🎯 Purpose of This Project
-
-* Build **real‑world UI skills**
-* Understand how ChatGPT‑like systems work
-* Prepare for scalable AI integration
-* Showcase frontend architecture & UX thinking
-
----
-
-## 👨‍💻 Author
-
-**Ishfaq Ahmad Bhat**
-- GitHub: [@ishfaq24](https://github.com/ishfaq24)
-- LinkedIn: [Ishfaq Ahmad Bhat](https://linkedin.com/in/ishfaq24)
-
----
-
-## ⭐ Show Your Support
-
-Give a ⭐ if this project helped you!
+### 3) ML Service (FastAPI)
 
 ```bash
-# Star the repo
-git stash
-git clone https://github.com/ishfaq24/videoCallInterview.git
-cd videoCallInterview
-# Star on GitHub!
+cd ml-services
+python -m venv .venv
+# Windows PowerShell
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+uvicorn app.main:app --reload --port 8000
 ```
 
----
+ML service runs at `http://localhost:8000`.
 
-**Happy Coding! 🚀**
+Note: A similar Python app also exists under `backend/app/`; prefer `ml-services/` as the dedicated service folder unless you intentionally run the backend copy.
+
+## Root Scripts
+
+From repository root:
+
+```bash
+npm run build
+npm run start
+```
+
+- `build`: installs backend/frontend dependencies and builds frontend.
+- `start`: starts backend (`backend/src/server.js`).
+
+## API Summary
+
+### Backend API base
+
+- `GET /health`
+- `POST /api/ai/tutor` (protected)
+- `GET /api/chat/token` (protected)
+- `POST /api/sessions/` (protected)
+- `GET /api/sessions/active` (protected)
+- `GET /api/sessions/my-recent` (protected)
+- `GET /api/sessions/:id` (protected)
+- `POST /api/sessions/:id/join` (protected)
+- `POST /api/sessions/:id/end` (protected)
+- `GET /api/dashboard/` (protected)
+- `PUT /api/dashboard/stats` (protected)
+- `POST /api/dashboard/activity` (protected)
+- `PUT /api/dashboard/goals` (protected)
+- `POST /api/tests/generate`
+
+### ML service API base
+
+- `GET /`
+- `GET /health`
+- `POST /generate`
+- `GET /video`
+
+## Production Notes
+
+- In production mode, the backend serves static frontend files from `frontend/dist`.
+- Ensure `NODE_ENV=production` and the frontend build artifacts are available.
+
+## Additional Docs
+
+- `ARCHITECTURE.md`: system architecture and flow documentation.
+- `frontend/README.md`: Vite frontend scaffold notes.
