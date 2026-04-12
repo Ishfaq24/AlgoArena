@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+manim
+google-generativeai
+python-dotenv
+gTTS
+pyttsx3

@@ -3,7 +3,6 @@ import ProblemsPage from "./Pages/problems/coding/ProblemsPage.jsx";
 import HomePage from "./Pages/HomePage.jsx";
 import ProblemPage from "./Pages/problems/coding/ProblemPage.jsx";
 import ProblemLayout from "./Pages/problems/ProblemsLayout.jsx";
-import SessionPage from "./Pages/SessionPage.jsx";
 import {
   SignedIn,
   SignedOut,
@@ -16,13 +15,13 @@ import { Toaster } from "react-hot-toast";
 import DashboardPage from "./Pages/DashboardPage.jsx";
 import SchoolProblems from "./Pages/problems/school/SchoolProblems.jsx";
 import AITutor from "./Pages/ai/AITutorPage.jsx";
-import Learn from "./Pages/learn/Learn.jsx";
 import PracticeLayout from "./Pages/PracticeLayout.jsx";
 import TestLayout from "./Pages/tests/TestLayout.jsx";
 
 import PracticeConfig from "./components/PracticeConfig.jsx";
 import TestTaker from "./components/TestTaker.jsx";
 import TestsLayout from "./components/TestsLayout.jsx";
+import HomeVideo from "./components/HomeVideo.jsx";
 
 
 const App = () => {
@@ -47,13 +46,13 @@ const App = () => {
           path="/dashboard"
           element={isSignedIn ? <DashboardPage /> : <Navigate to={"/"} />}
         />
-
+{/* 
         <Route
           path="/problems"
           element={isSignedIn ? <ProblemLayout /> : <Navigate to={"/"} />}
-        />
+        /> */}
 
-        <Route
+        {/* <Route
           path="/problems/coding"
           element={isSignedIn ? <ProblemsPage /> : <Navigate to={"/"} />}
         />
@@ -64,32 +63,32 @@ const App = () => {
         <Route
           path="/problems/school"
           element={isSignedIn ? <SchoolProblems /> : <Navigate to={"/"} />}
-        />
+        /> */}
+
+        {/*Video Generation route */}
 
         <Route
           path="/learn"
-          element={isSignedIn ? <Learn /> : <Navigate to={"/"} />}
+          element={isSignedIn ? <HomeVideo /> : <Navigate to={"/"} />}
         />
 
-        <Route
+        {/* <Route
           path="/practice"
           element={isSignedIn ? <PracticeLayout /> : <Navigate to={"/"} />}
-        />
+        /> */}
 
-        <Route
+        {/* <Route
           path="/tests"
           element={isSignedIn ? <TestLayout /> : <Navigate to={"/"} />}
-        />
+        /> */}
 
-        <Route path="/" element={<TestsLayout />} />
+        {/* <Route path="/" element={<TestsLayout />} />
         <Route path="/practice/:domain" element={<PracticeConfig />} />
         <Route path="/test" element={<TestTaker />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} /> */}
 
-        <Route
-          path="/session/:id"
-          element={isSignedIn ? <SessionPage /> : <Navigate to={"/"} />}
-        />
+       
+
       </Routes>
       <Toaster toastOptions={{ duration: 3000 }} />
     </>

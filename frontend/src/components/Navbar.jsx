@@ -24,6 +24,7 @@ function Navbar() {
     setOpen(false);
   }, [location.pathname]);
 
+  // eslint-disable-next-line no-unused-vars
   const navItem = (to, label, Icon) => (
     <Link
       key={to}
@@ -68,9 +69,9 @@ function Navbar() {
         {/* DESKTOP NAV */}
         <div className="hidden md:flex items-center gap-1">
           {navItem("/learn", "Learn", GraduationCapIcon)}
-          {navItem("/practice", "Practice", BrainIcon)}
-          {navItem("/problems", "Problems", CodeIcon)}
-          {navItem("/tests", "Tests", BookOpenIcon)}
+          {/* {navItem("/practice", "Practice", BrainIcon)} */}
+          {/* {navItem("/problems", "Problems", CodeIcon)} */}
+          {/* {navItem("/tests", "Tests", BookOpenIcon)} */}
           {navItem("/ai", "AI Tutor", BotIcon)}
           {navItem("/dashboard", "Dashboard", LayoutDashboardIcon)}
 
@@ -93,9 +94,9 @@ function Navbar() {
         <div className="md:hidden border-t border-primary/20 bg-base-100/95 backdrop-blur-md ">
           <div className="flex flex-col gap-1 p-4">
             {navItem("/learn", "Learn", GraduationCapIcon)}
-            {navItem("/practice", "Practice", BrainIcon)}
+            {/* {navItem("/practice", "Practice", BrainIcon)}
             {navItem("/problems", "Problems", CodeIcon)}
-            {navItem("/tests", "Tests", BookOpenIcon)}
+            {navItem("/tests", "Tests", BookOpenIcon)} */}
             {navItem("/ai", "AI Tutor", BotIcon)}
             {navItem("/dashboard", "Dashboard", LayoutDashboardIcon)}
 
