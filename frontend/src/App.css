@@ -1,0 +1,79 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: white;
+}
+
+input {
+  border-radius: 8px;
+  border: none;
+}
+
+button {
+  background: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Fixes the navbar to the very top and stretches it to 100% width */
+.fixed-nav-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;       /* Forces it to take the full viewport width */
+  z-index: 1000;      /* Ensures it stays on top of other content */
+  display: flex;
+  justify-content: center; /* Centers the inner Navbar content if needed */
+  background-color: #1a1a1a; /* Match this to your navbar's background color */
+}
+
+/* Ensure the Navbar component itself takes up the full width of the wrapper */
+.fixed-nav-wrapper > * {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+}
+
+/* Pushes the rest of the page down so the Hero section doesn't hide behind the navbar */
+.main-content-offset {
+  padding-top: 80px; /* Adjust this number to match the actual height of your Navbar */
+}
+
+/* 1. Add space between the two panels */
+.input-panel {
+  margin-bottom: 2.5rem; /* This separates the top box from the bottom box */
+}
+
+/* 2. Make the overall layout width look balanced (not too wide on big screens) */
+.stacked-shell {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 900px; /* Constrains the width nicely */
+  margin: 0 auto;   /* Centers everything on the page */
+  padding: 2rem;
+}
+
+/* 3. Give the video placeholder a proper height so it looks like a video player */
+.preview-placeholder {
+  min-height: 450px; /* Forces the box to be tall enough for a video */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  border-radius: 8px;
+  /* (Keep whatever border/background color you already have for this class) */
+}
+
+/* 4. Ensure the actual video player matches this height when it loads */
+.video-container, .preview-panel video {
+  width: 100%;
+  min-height: 450px;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  object-fit: cover;
+}
