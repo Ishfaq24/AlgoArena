@@ -2,91 +2,116 @@ from manim import *
 
 class DemoScene(Scene):
     def construct(self):
-        title = Text("Understanding the Backend", font_size=40)
+        title = Text("What is Binary Search?", font_size=40)
+        title.to_edge(UP)
         self.play(Write(title))
+        self.wait(1)
+
+        desc1 = Text("An efficient way to find an item", font_size=28)
+        desc1.next_to(title, DOWN, buff=0.5)
+        self.play(Write(desc1))
+        self.wait(1)
+
+        desc2 = Text("in a SORTED list.", font_size=28, color=YELLOW)
+        desc2.next_to(desc1, DOWN, buff=0.4)
+        self.play(Write(desc2))
         self.wait(2)
-        self.play(FadeOut(title))
 
-        client = Rectangle(height=2, width=3, color=BLUE)
-        client_text = Text("Client (Browser)", font_size=28).move_to(client.get_center())
-        client_group = VGroup(client, client_text).shift(LEFT * 4)
-
-        self.play(Create(client), Write(client_text))
-        self.wait(1)
-
-        server = Rectangle(height=2, width=3, color=GREEN)
-        server_text = Text("Backend (Server)", font_size=28).move_to(server.get_center())
-        server_group = VGroup(server, server_text).shift(RIGHT * 4)
-
-        self.play(Create(server), Write(server_text))
-        self.wait(1)
-
-        req_arrow = Arrow(client.get_right(), server.get_left(), color=WHITE)
-        req_label = Text("HTTP Request", font_size=20).next_to(req_arrow, UP, buff=0.1)
-
-        self.play(GrowArrow(req_arrow), Write(req_label))
-        self.wait(1)
-
-        res_arrow = Arrow(server.get_left(), client.get_right(), color=YELLOW).shift(DOWN * 0.5)
-        res_label = Text("HTTP Response", font_size=20).next_to(res_arrow, DOWN, buff=0.1)
-
-        self.play(GrowArrow(res_arrow), Write(res_label))
-        self.wait(2)
         self.play(FadeOut(*self.mobjects))
 
-        backend_title = Text("The Backend Components", font_size=40)
-        backend_title.to_edge(UP)
-        self.play(Write(backend_title))
+        header = Text("How it Works", font_size=35)
+        header.to_edge(UP)
+        self.play(Write(header))
         self.wait(1)
 
-        comp1 = Text("1. Server", font_size=28)
-        comp1.next_to(backend_title, DOWN, buff=1)
-        self.play(Write(comp1))
+        nums = [10, 20, 30, 40, 50, 60, 70]
+        squares = VGroup(*[Square(side_length=0.8) for _ in range(len(nums))])
+        squares.arrange(RIGHT, buff=0.1).shift(UP * 0.5)
+
+        labels = VGroup(*[Text(str(n), font_size=24) for n in nums])
+        for i in range(len(labels)):
+            labels[i].move_to(squares[i].get_center())
+
+        array_group = VGroup(squares, labels)
+        self.play(Create(squares), Write(labels))
         self.wait(1)
 
-        comp2 = Text("2. Application Logic", font_size=28)
-        comp2.next_to(comp1, DOWN, buff=0.5)
-        self.play(Write(comp2))
+        target_text = Text("Target: 60", font_size=28, color=YELLOW)
+        target_text.next_to(array_group, DOWN, buff=0.7)
+        self.play(Write(target_text))
         self.wait(1)
 
-        comp3 = Text("3. Database", font_size=28)
-        comp3.next_to(comp2, DOWN, buff=0.5)
-        self.play(Write(comp3))
+        low_ptr = Arrow(start=DOWN, end=UP, color=BLUE).scale(0.5)
+        low_ptr.next_to(squares[0], DOWN, buff=0.2)
+        low_label = Text("Low", font_size=20, color=BLUE).next_to(low_ptr, DOWN, buff=0.1)
+        self.play(Create(low_ptr), Write(low_label))
         self.wait(1)
 
-        box = SurroundingRectangle(comp2, color=YELLOW)
-        self.play(Create(box))
+        high_ptr = Arrow(start=DOWN, end=UP, color=RED).scale(0.5)
+        high_ptr.next_to(squares[-1], DOWN, buff=0.2)
+        high_label = Text("High", font_size=20, color=RED).next_to(high_ptr, DOWN, buff=0.1)
+        self.play(Create(high_ptr), Write(high_label))
+        self.wait(1)
+
+        mid_idx = 3
+        mid_ptr = Arrow(start=DOWN, end=UP, color=GREEN).scale(0.5)
+        mid_ptr.next_to(squares[mid_idx], DOWN, buff=0.2)
+        mid_label = Text("Mid", font_size=20, color=GREEN).next_to(mid_ptr, DOWN, buff=0.1)
+
+        self.play(Create(mid_ptr), Write(mid_label))
+        self.wait(1)
+
+        mid_box = SurroundingRectangle(squares[mid_idx], color=GREEN)
+        self.play(Create(mid_box))
+        self.wait(1)
+
+        step1 = Text("40 < 60: Discard Left Half", font_size=24)
+        step1.next_to(target_text, DOWN, buff=0.5)
+        self.play(Write(step1))
         self.wait(2)
+
+        self.play(FadeOut(mid_ptr), FadeOut(mid_label), FadeOut(mid_box), FadeOut(step1))
+
+        low_ptr.next_to(squares[4], DOWN, buff=0.2)
+        low_label.next_to(low_ptr, DOWN, buff=0.1)
+        self.play(low_ptr.animate.move_to(low_ptr), low_label.animate.move_to(low_label))
+        self.wait(1)
+
+        mid_idx_2 = 5
+        mid_ptr_2 = Arrow(start=DOWN, end=UP, color=GREEN).scale(0.5)
+        mid_ptr_2.next_to(squares[mid_idx_2], DOWN, buff=0.2)
+        mid_label_2 = Text("Mid", font_size=20, color=GREEN).next_to(mid_ptr_2, DOWN, buff=0.1)
+
+        self.play(Create(mid_ptr_2), Write(mid_label_2))
+        self.wait(1)
+
+        mid_box_2 = SurroundingRectangle(squares[mid_idx_2], color=GREEN)
+        self.play(Create(mid_box_2))
+        self.wait(1)
+
+        step2 = Text("60 == 60: FOUND!", font_size=24, color=YELLOW)
+        step2.next_to(target_text, DOWN, buff=0.5)
+        self.play(Write(step2))
+        self.wait(2)
+
         self.play(FadeOut(*self.mobjects))
 
-        db_box = Rectangle(height=1.5, width=3, color=RED)
-        db_text = Text("Database", font_size=28).move_to(db_box.get_center())
-        db_group = VGroup(db_box, db_text).shift(UP * 1)
-
-        self.play(Create(db_box), Write(db_text))
+        summary_title = Text("Summary", font_size=35)
+        summary_title.to_edge(UP)
+        self.play(Write(summary_title))
         self.wait(1)
 
-        logic_box = Rectangle(height=1.5, width=3, color=PURPLE)
-        logic_text = Text("App Logic (Python/Node)", font_size=28).move_to(logic_box.get_center())
-        logic_group = VGroup(logic_box, logic_text).next_to(db_group, DOWN, buff=1)
-
-        self.play(Create(logic_box), Write(logic_text))
+        point1 = Text("1. List must be sorted", font_size=28)
+        point1.next_to(summary_title, DOWN, buff=0.6)
+        self.play(Write(point1))
         self.wait(1)
 
-        query_arrow = Arrow(logic_box.get_top(), db_box.get_bottom(), color=WHITE)
-        query_text = Text("Query", font_size=20).next_to(query_arrow, RIGHT, buff=0.1)
-
-        self.play(GrowArrow(query_arrow), Write(query_text))
+        point2 = Text("2. Divide search area by half", font_size=28)
+        point2.next_to(point1, DOWN, buff=0.4)
+        self.play(Write(point2))
         self.wait(1)
 
-        data_arrow = Arrow(db_box.get_bottom(), logic_box.get_top(), color=YELLOW).shift(LEFT * 0.5)
-        data_text = Text("Data", font_size=20).next_to(data_arrow, LEFT, buff=0.1)
-
-        self.play(GrowArrow(data_arrow), Write(data_text))
+        point3 = Text("3. Much faster than linear search", font_size=28)
+        point3.next_to(point2, DOWN, buff=0.4)
+        self.play(Write(point3))
         self.wait(2)
-        self.play(FadeOut(*self.mobjects))
-
-        summary = Text("Backend = Server + Logic + DB", font_size=32)
-        self.play(Write(summary))
-        self.wait(2)
-        self.play(FadeOut(summary))
