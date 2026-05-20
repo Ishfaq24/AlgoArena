@@ -27,6 +27,8 @@ class LLMServiceManager:
         prompt = f"""
 Generate COMPLETE Manim animation code for: {topic}
 
+YOU ARE CREATING A PROFESSIONAL EDUCATIONAL VIDEO. PRIORITIZE VISUAL BEAUTY, SMOOTH ANIMATIONS, AND POLISHED COMPOSITION.
+
 CRITICAL SETUP RULES:
 1. Start with: from manim import *
 2. Class MUST be named: class DemoScene(Scene):
@@ -35,6 +37,13 @@ CRITICAL SETUP RULES:
 5. Code MUST run without errors. NO undefined variables.
 6. When highlighting with SurroundingRectangle, first assign it to a variable 
    (e.g. box = SurroundingRectangle(target, color=YELLOW)) and then call self.play(Create(box)).
+
+VISUAL BEAUTY & COLOR DESIGN:
+1. Choose a cohesive color scheme: Start with a dark background (e.g., "#0a0a1a" or "#1a1a2e")
+2. Use color contrast: Pair bright accent colors (CYAN, GOLD, #FF6B6B, #4ECDC4) with light text (WHITE or LIGHT_GRAY)
+3. Create visual hierarchy: Important concepts in large bold text, supporting info in smaller gray text
+4. Gradual color transitions: Use `set_color_by_gradient` for shapes to create beautiful color flows
+5. Consistent styling: All text objects should use the same professional font and color palette
 
 LAYOUT & POSITIONING (HOW TO AVOID OVERLAPPING & OUT-OF-BOUNDS):
 1. NEVER leave elements at the default center origin if multiple elements exist. 
@@ -50,12 +59,41 @@ SCENE MANAGEMENT & ORDERED RENDERING:
    - Define Element B -> Position relative to A -> self.play(FadeIn(B)) -> self.wait(1)
 3. Do not define all elements at the top. Define, position, and animate them chronologically.
 
-VIDEO QUALITY & STORYTELLING:
-1. STRUCTURE: Title Introduction -> Clear Screen -> Visual Breakdown -> Clear Screen -> Final Summary.
-2. VISUALS: Use arrows (`Arrow`), boxes (`SurroundingRectangle`), and shapes (`Circle`, `Rectangle`) to illustrate concepts rather than just text.
-3. PACING: Always include `self.wait(1)` or `self.wait(2)` after every animation.
+VIDEO QUALITY & STORYTELLING (FOCUS ON BEAUTIFUL VISUALS):
+1. STRUCTURE: Professional Title Slide -> Animated Intro -> Multiple Visual Sections -> Key Takeaway Slide -> Closing
+2. VISUALS: Create visual interest with:
+   - Geometric shapes (circles, rectangles, triangles) with gradient fills
+   - Animated arrows showing flow and relationships
+   - Highlighted boxes around key terms with color emphasis
+   - SVG-like diagrams with smooth curves and connections
+   - Number sequences and bullet points that animate in order
+   - Before/after comparisons using side-by-side layouts
+3. ANIMATIONS: Use sophisticated transitions:
+   - `FadeIn`/`FadeOut` for smooth entry/exit
+   - `DrawBorderThenFill` for shapes to feel alive
+   - `Write` for elegant text appearance
+   - `Transform` for shape morphing and transitions
+   - `Indicate` to highlight important elements with a glow effect
+4. PACING: Strategic timing for maximum retention:
+   - 1-2 second pause after title animations
+   - 1.5-2 seconds for complex diagrams to sink in
+   - 0.5 second pauses between text elements
+   - Build suspense with staggered animations (not all at once)
+5. PROFESSIONAL POLISH:
+   - Add a subtle background grid or shape for texture
+   - Use consistent font sizes and spacing throughout
+   - Add visual separation (lines, boxes) between sections
+   - Include a progress indicator (if applicable)
 
-Now generate clean, sequentially ordered, properly spaced animation code for: {topic}
+ANIMATION TECHNIQUES FOR BEAUTY:
+1. Entrance: Use `GrowFromCenter`, `FadeIn`, `Write` (avoid abrupt `Create` when possible)
+2. Emphasis: Use `Indicate` to create a glowing box around key concepts
+3. Transitions: Use `ApplyMethod` with smooth animations for position/color changes
+4. Exits: Use `FadeOut`, `ShrinkToCenter` for a polished disappearance
+5. Timing: Always add `run_time=0.8` to `1.5` for smooth animations (not instant)
+
+Now generate BEAUTIFUL, sequentially ordered, properly spaced animation code for: {topic}
+Focus on making it visually stunning while educationally clear.
 """
 
         try:
@@ -65,7 +103,7 @@ Now generate clean, sequentially ordered, properly spaced animation code for: {t
                 model=self.model,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.7,
-                max_tokens=2000
+                max_tokens=2800
             )
 
             code = response.choices[0].message.content.strip()
@@ -114,19 +152,35 @@ Now generate clean, sequentially ordered, properly spaced animation code for: {t
         """
 
         prompt = f"""
-You are an expert educator and voice-over writer.
+You are an expert educator and voice-over writer creating a professional educational video.
 
-Write a clear, engaging narration script for an educational video
-about the topic: "{topic}".
+Write a clear, ENGAGING, and emotionally resonant narration script 
+for a high-quality educational video about: "{topic}".
 Write the entire narration in {language_name}.
 If language is Hindi, you MUST write in Devanagari script.
 
 Constraints:
 - Plain text only (no markdown, no bullet points, no headings).
-- 6-12 short sentences, conversational and student-friendly.
+- 8-15 engaging sentences, conversational and compelling.
 - Explain step by step, as if speaking in a video.
+- Start directly with the lesson content. Do NOT use greetings or salutations.
 - Do not include scene directions or camera cues.
 - Do not mention that you are an AI.
+
+TONE & STYLE:
+- Use a warm, professional tone that builds excitement about the topic
+- Start with a hook: why this topic matters or an interesting question
+- Use simple, vivid language that paints a picture (e.g., "imagine", "think about")
+- Create rhythm: vary sentence length between short punchy ones and slightly longer ones
+- Build toward a climax: end with the most interesting or surprising insight
+- Make it relatable: connect abstract concepts to real-world examples or everyday experiences
+
+STRUCTURE:
+1. Hook (1-2 sentences): Grab attention with a question or surprising fact
+2. Foundation (2-3 sentences): Explain the basic concept simply
+3. Explanation (3-4 sentences): Walk through how it works step by step
+4. Example or Proof (2-3 sentences): Show a concrete example or why it matters
+5. Closing (1-2 sentences): Recap the key insight and inspire further thinking
 """
 
         try:
@@ -136,7 +190,7 @@ Constraints:
                 model=self.model,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.7,
-                max_tokens=700,
+                max_tokens=900,
             )
 
             narration = response.choices[0].message.content.strip()
@@ -147,12 +201,16 @@ Constraints:
             if narration.endswith("```"):
                 narration = narration.rsplit("\n", 1)[0]
 
+            narration = self._strip_opening_greeting(narration, language_code)
+
             narration = self._ensure_target_language(
                 text=narration,
                 topic=topic,
                 language_name=language_name,
                 language_code=language_code,
             )
+
+            narration = self._strip_opening_greeting(narration, language_code)
 
             print("✅ Narration script generated")
             return narration
@@ -172,6 +230,139 @@ Constraints:
                 "We will start with the basic intuition, then walk through a simple example, "
                 "and finally connect the concept back to real-world usage."
             )
+
+    def generate_study_guide(
+        self,
+        topic: str,
+        language_name: str = "English",
+        language_code: str = "en",
+    ) -> dict:
+        """Generate a richer study guide that can be exported as a PDF."""
+
+        prompt = f"""
+You are an expert teacher writing a polished, professional study guide for a PDF handout.
+
+Create a detailed, BEAUTIFUL, classroom-ready study guide about the topic: "{topic}".
+This will be a professional PDF handout that students keep and refer to.
+Write the entire response in English only.
+Do not use any non-English script, even if the video narration is in another language.
+
+Return ONLY valid JSON with this structure:
+{{
+  "title": "...",
+  "subtitle": "...",
+  "overview": "...",
+  "core_concepts": [
+    {{"heading": "...", "content": "..."}},
+    {{"heading": "...", "content": "..."}}
+  ],
+  "worked_example": "...",
+  "real_world_applications": ["...", "...", "..."],
+  "common_misconceptions": ["...", "...", "..."],
+  "quick_recap": "...",
+  "practice_questions": ["...", "...", "..."],
+  "further_learning": ["...", "...", "..."]
+}}
+
+Rules:
+- No markdown fences, no commentary, no extra keys.
+- Make the content RICH enough for a 4-6 page professional PDF that students value.
+- Use plain, precise language with strong conceptual explanations.
+- Include deep intuition, elegant step-by-step logic, multiple worked examples, research-backed insights, and challenging revision questions.
+- Avoid fluff; every section should add learning value.
+- Keep each paragraph reasonably short so it fits nicely in a printed handout.
+
+CONTENT QUALITY:
+- Title: Make it memorable and specific (not just "Study Guide: Topic")
+- Overview: Write 2-3 compelling sentences that set context and show why this matters
+- Core Concepts: Create 4-5 concepts instead of 3. Go deep on each with intuition + mechanism
+- Worked Example: Provide a DETAILED step-by-step walkthrough with numbers/calculations where applicable
+- Applications: Add 5-6 real-world uses to show practical relevance
+- Misconceptions: List 4-5 common mistakes with explanations of why students get confused
+- Quick Recap: Write 3-4 bullet-like sentences summarizing the essence
+- Practice Questions: Include 5-6 questions ranging from easy recall to deep application
+- Further Learning: Add 5-6 advanced resources or extensions for curious learners
+
+TONE & PRESENTATION:
+- Write as if mentoring a student (supportive, clear, encouraging)
+- Use active voice and strong verbs
+- Break complex ideas into digestible pieces
+- Highlight key terms in context (define as you use them)
+- End with an inspirational note about the power/beauty of this topic
+"""
+
+        try:
+            print(f"📘 Generating study guide for: {topic} ({language_name}/{language_code})")
+
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=[{"role": "user", "content": prompt}],
+                temperature=0.6,
+                max_tokens=3200,
+            )
+
+            raw_text = response.choices[0].message.content.strip()
+            if raw_text.startswith("```"):
+                raw_text = raw_text.split("\n", 1)[-1]
+            if raw_text.endswith("```"):
+                raw_text = raw_text.rsplit("\n", 1)[0]
+
+            guide = json.loads(raw_text)
+            guide["title"] = guide.get("title") or f"Study Guide: {topic}"
+            guide["subtitle"] = guide.get("subtitle") or "A detailed revision guide for study and review"
+            guide["overview"] = guide.get("overview") or ""
+            guide["core_concepts"] = guide.get("core_concepts") or []
+            guide["worked_example"] = guide.get("worked_example") or ""
+            guide["real_world_applications"] = guide.get("real_world_applications") or []
+            guide["common_misconceptions"] = guide.get("common_misconceptions") or []
+            guide["quick_recap"] = guide.get("quick_recap") or ""
+            guide["practice_questions"] = guide.get("practice_questions") or []
+            guide["further_learning"] = guide.get("further_learning") or []
+
+            return guide
+
+        except Exception as e:
+            print(f"❌ Error generating study guide: {e}")
+            return self._fallback_study_guide(topic, language_name, language_code)
+
+    def _fallback_study_guide(self, topic: str, language_name: str, language_code: str) -> dict:
+        return {
+            "title": f"Study Guide: {topic}",
+            "subtitle": "A detailed revision handout for learning and review",
+            "overview": f"This guide explains the core ideas of {topic}, how it works, and why it matters in practical settings. The goal is to give you a clear, printable reference you can read before revision or use after watching the video.",
+            "core_concepts": [
+                {"heading": "Core Idea", "content": f"Start by understanding the main purpose and intuition behind {topic}. Ask what problem it solves and why that problem is important."},
+                {"heading": "How It Works", "content": "Break the topic into small steps so the process becomes easier to follow and remember. When the steps are clear, the entire concept becomes much easier to retain."},
+                {"heading": "Why It Matters", "content": "This concept is useful because it helps with reasoning, problem-solving, and real-world applications. It is not just theory; it is a method for thinking and making predictions."},
+                {"heading": "Key Terms to Remember", "content": "Keep track of the main vocabulary, because strong definitions make revision easier and help you explain the topic with confidence."},
+            ],
+            "worked_example": f"A simple example helps connect theory to practice. For {topic}, imagine applying the idea step by step in a real scenario. Begin by identifying the input, then follow the process, and finally check the result against the expected outcome.",
+            "real_world_applications": [
+                f"Learning and teaching {topic} more effectively",
+                f"Using {topic} to solve practical problems",
+                "Connecting the concept to everyday decisions and analysis",
+                "Building more advanced ideas on top of the same foundation",
+            ],
+            "common_misconceptions": [
+                "It is often more approachable than it first appears when broken into steps.",
+                "Memorizing definitions is not enough without understanding the intuition.",
+                "Examples are essential for long-term recall and confidence.",
+                "A concept that seems simple can still be misunderstood if the process is not practiced.",
+            ],
+            "quick_recap": f"In short, {topic} becomes much easier to master when you study its definition, process, examples, and applications together. Review the core idea, test yourself with the example, and then revisit the misconceptions to see if you can explain the topic clearly.",
+            "practice_questions": [
+                f"Explain {topic} in your own words.",
+                f"Give one real-world example of {topic}.",
+                f"Which part of {topic} is most important and why?",
+                "What mistake would a beginner most likely make when first learning this topic?",
+            ],
+            "further_learning": [
+                "Draw a simple diagram to revise the concept.",
+                "Teach the topic to a friend in two minutes.",
+                "Write a one-page summary with the key points.",
+                "Try a second example without looking at the notes.",
+            ],
+        }
 
     def _ensure_target_language(
         self,
@@ -237,6 +428,31 @@ Text:
     def _has_devanagari(self, text: str) -> bool:
         # Devanagari Unicode block: U+0900 to U+097F
         return bool(re.search(r"[\u0900-\u097F]", text))
+
+    def _strip_opening_greeting(self, text: str, language_code: str) -> str:
+        """Remove common opening greetings so narration starts with lesson content."""
+        if not text:
+            return text
+
+        stripped = text.strip()
+
+        # Covers common opening salutations seen in English/Hindi and romanized Hindi.
+        greeting_patterns = [
+            r"^(?:hello|hi|hey|greetings|good\s+morning|good\s+afternoon|good\s+evening|welcome(?:\s+everyone)?)[\s,!\.:-]*",
+            r"^(?:namaste|namaskar|namskar|namaskaar|नमस्ते|नमस्कार|स्वागत(?:\s+है)?)[\s,!\.:-]*",
+        ]
+
+        if language_code == "en":
+            patterns = [greeting_patterns[0]]
+        elif language_code == "hi":
+            patterns = [greeting_patterns[1], greeting_patterns[0]]
+        else:
+            patterns = greeting_patterns
+
+        for pattern in patterns:
+            stripped = re.sub(pattern, "", stripped, flags=re.IGNORECASE)
+
+        return stripped.strip()
 
     # ---------------- CLEANING METHODS ---------------- #
 
