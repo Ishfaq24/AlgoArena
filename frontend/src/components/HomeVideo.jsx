@@ -5,7 +5,6 @@ import { generateVideo, getPdfUrl, getVideoUrl, regeneratePdf } from "../api";
 import VideoPlayer from "./VideoPlayer";
 import Loader from "./LoaderVideo";
 import Hero from "./HeroVideo";
-import Navbar from "./Navbar";
 
 const LANGUAGE_OPTIONS = [
   { code: "en", label: "English" },
@@ -124,7 +123,7 @@ function HomeVideo() {
       <main className="shell">
         <section className="panel studio-panel">
           <div className="panel-header">
-            <span className="panel-badge">AlgoArena • Code Together</span>
+            <span className="panel-badge">AlgoArena - Code Together</span>
             <h2>Generate an animated explainer</h2>
             <p>
               Describe any concept and we will craft a high-quality Manim video
@@ -189,7 +188,7 @@ function HomeVideo() {
                   onClick={() => handleGenerate(includePdf)}
                   disabled={loading || !topic.trim()}
                 >
-                  {loading ? "Generating…" : includePdf ? "Generate Video + PDF" : "Generate Video"}
+                  {loading ? "Generating..." : includePdf ? "Generate Video + PDF" : "Generate Video"}
                 </button>
               </div>
             </section>
@@ -234,7 +233,7 @@ function HomeVideo() {
             <div className="status-row">
               <Loader />
               <span className="status-text">
-                Rendering with Manim • This may take a minute
+                Rendering with Manim - this may take a minute
               </span>
             </div>
           )}

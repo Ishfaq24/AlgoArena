@@ -421,3 +421,9 @@ VITE_API_BASE_URL=http://localhost:3000/api
 - Leaderboards and achievements
 - Timer-based mock tests
 - Voice input for AI tutor
+
+
+How to start ml-services
+```
+uvicorn app.main:app
+```

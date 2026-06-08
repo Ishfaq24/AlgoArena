@@ -5,7 +5,7 @@ class DemoScene(Scene):
         self.camera.background_color = "#0a0a0a"
 
         # 1. Title Introduction
-        title = Text('linear search in data structures', font_size=40, color=BLUE)
+        title = Text('explain machine learning in detail', font_size=40, color=BLUE)
         title.to_edge(UP)
         self.play(Write(title), run_time=1.5)
         self.wait(0.5)
