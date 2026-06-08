@@ -1,4 +1,4 @@
-import React from "https://esm.sh/react@19.2.4";
+import React from "react";
 
 export const Sidebar = ({
   threads,
@@ -12,39 +12,25 @@ export const Sidebar = ({
   return (
     <aside
       className={`
-        fixed left-0 z-40 w-80
-        top-16 bottom-0
+        fixed left-0 z-40 w-80 top-16 bottom-0
         lg:top-0 lg:inset-y-0
-
-        bg-base-100 border-r border-base-200
-        flex flex-col
-        transition-transform duration-300 ease-in-out
+        bg-base-200 border-r border-base-300
+        flex flex-col transition-transform duration-300 ease-in-out
         ${isOpen ? "translate-x-0" : "-translate-x-full"}
         lg:relative lg:translate-x-0 ${!isOpen && "lg:hidden"}
       `}
     >
-      {/* ================= HEADER ================= */}
-      <div className="h-16 px-4 flex items-center justify-between border-b border-base-200">
-        <h1
-          className="
-            text-xl font-extrabold tracking-tight
-            bg-gradient-to-r from-primary to-secondary
-            bg-clip-text text-transparent
-          "
-        >
-          AlgoArena
+      <div className="h-16 px-4 flex items-center justify-between border-b border-base-300">
+        <h1 className="text-lg font-semibold tracking-tight text-base-content">
+          AlgoArena AI
         </h1>
 
         <div className="flex items-center gap-1">
-          {/* New Chat */}
           <button
             onClick={onNew}
             className="
-              p-2 rounded-lg
-              bg-primary text-primary-content
-              hover:bg-primary/90
-              transition-colors
-              shadow-sm
+              p-2 rounded-lg bg-base-content text-base-100
+              hover:opacity-90 transition-colors shadow-sm
             "
             title="New Chat"
           >
@@ -64,15 +50,11 @@ export const Sidebar = ({
             </svg>
           </button>
 
-          {/* Close (mobile) */}
           <button
             onClick={toggleSidebar}
             className="
-              p-2 rounded-lg
-              text-base-content/60
-              hover:text-base-content
-              hover:bg-base-200
-              transition-colors lg:hidden
+              p-2 rounded-lg text-base-content/60 hover:text-base-content
+              hover:bg-base-300 transition-colors lg:hidden
             "
             title="Close Sidebar"
           >
@@ -94,23 +76,18 @@ export const Sidebar = ({
         </div>
       </div>
 
-      {/* ================= THREAD LIST ================= */}
       <div className="flex-1 overflow-y-auto p-3 space-y-1">
-        <div className="flex items-center justify-between px-3 py-2">
+        <div className="px-3 py-2">
           <span className="text-[10px] font-bold text-base-content/50 uppercase tracking-widest">
             Recents
-          </span>
-          <span className="text-[10px] px-2 py-0.5 rounded bg-base-200 text-base-content/60">
-            ⌘ K
           </span>
         </div>
 
         {threads.length === 0 ? (
           <div className="text-center py-12 px-6 space-y-3 text-base-content/60">
             <div className="text-sm">Start a conversation with</div>
-            <div className="inline-flex items-center gap-2 text-primary font-semibold">
+            <div className="inline-flex items-center gap-2 text-emerald-600 font-semibold">
               <span>AlgoArena AI</span>
-              <span>⚡</span>
             </div>
             <p className="text-xs opacity-70">
               Ask DSA, Web, ML or exam doubts
@@ -125,56 +102,32 @@ export const Sidebar = ({
                 key={thread.id}
                 onClick={() => onSelect(thread.id)}
                 className={`
-                  group relative flex items-center gap-3
-                  p-3 rounded-xl cursor-pointer
-                  transition-all duration-200
+                  group relative flex items-center gap-3 p-3 rounded-xl
+                  cursor-pointer transition-all duration-200
                   ${
                     isActive
-                      ? `
-                        bg-base-200 text-base-content
-                        ring-1 ring-primary/30
-                      `
-                      : `
-                        text-base-content/70
-                        hover:bg-base-200
-                        hover:text-base-content
-                        hover:-translate-y-[1px]
-                      `
+                      ? "bg-base-100 text-base-content ring-1 ring-base-300"
+                      : "text-base-content/70 hover:bg-base-100 hover:text-base-content"
                   }
                 `}
               >
-                {/* Active Bar */}
                 {isActive && (
-                  <div
-                    className="
-                      absolute left-0 top-2 bottom-2
-                      w-[2px] bg-primary rounded-full
-                    "
-                  />
+                  <div className="absolute left-0 top-2 bottom-2 w-[2px] bg-emerald-500 rounded-full" />
                 )}
 
-                {/* Status Dot */}
                 <div
                   className={`
                     shrink-0 w-2 h-2 rounded-full
-                    ${isActive ? "bg-primary" : "bg-base-300"}
+                    ${isActive ? "bg-emerald-500" : "bg-base-300"}
                   `}
                 />
 
-                {/* Title */}
                 <div className="relative flex-1 overflow-hidden">
                   <span className="text-sm font-medium block truncate pr-10">
                     {thread.title}
                   </span>
-                  <div
-                    className="
-                      pointer-events-none absolute right-0 top-0 h-full w-6
-                      bg-gradient-to-l from-base-200 to-transparent
-                    "
-                  />
                 </div>
 
-                {/* DELETE — mobile safe */}
                 <button
                   onClick={(e) => {
                     e.preventDefault();
@@ -182,15 +135,9 @@ export const Sidebar = ({
                     onDelete(thread.id);
                   }}
                   className="
-                    absolute right-2
-                    p-2 rounded-lg
-                    text-base-content/50
-                    hover:text-error
-                    hover:bg-error/10
-                    transition-all
-
-                    opacity-100 sm:opacity-0
-                    sm:group-hover:opacity-100
+                    absolute right-2 p-2 rounded-lg text-base-content/50
+                    hover:text-error hover:bg-error/10 transition-all
+                    opacity-100 sm:opacity-0 sm:group-hover:opacity-100
                   "
                   title="Delete Chat"
                 >
@@ -215,12 +162,9 @@ export const Sidebar = ({
         )}
       </div>
 
-      {/* ================= FOOTER ================= */}
-      <div className="p-4 border-t border-base-200 text-xs flex items-center gap-2">
-        <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-        <span className="text-base-content/60">
-          AlgoArena AI Online
-        </span>
+      <div className="p-4 border-t border-base-300 text-xs flex items-center gap-2">
+        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+        <span className="text-base-content/60">AlgoArena AI Online</span>
       </div>
     </aside>
   );

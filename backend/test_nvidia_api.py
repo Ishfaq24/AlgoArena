@@ -1,15 +1,25 @@
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 from openai import OpenAI
 
 load_dotenv()
+load_dotenv(Path(__file__).resolve().parent / ".env")
 
-api_key = os.getenv("OPENAI_API_KEY", "").strip()
-base_url = "https://integrate.api.nvidia.com/v1"
-model = "google/gemma-4-31b-it"
+base_url = os.getenv("OPENAI_BASE_URL", "https://integrate.api.nvidia.com/v1").strip()
+api_key = (
+    os.getenv("OPENAI_API_KEY", "").strip()
+    or os.getenv("OPENROUTER_API_KEY", "").strip()
+    or os.getenv("NVIDIA_API_KEY", "").strip()
+)
+model = os.getenv("OPENAI_MODEL", "").strip() or (
+    "openai/gpt-4o-mini" if "openrouter.ai" in base_url else "google/gemma-4-31b-it"
+)
 
 print("="*80)
-print("🎨 ASKING NVIDIA TO GENERATE MANIM CODE")
+print("🎨 ASKING LLM PROVIDER TO GENERATE MANIM CODE")
+print(f"base_url={base_url}")
+print(f"model={model}")
 print("="*80 + "\n")
 
 if not api_key:
@@ -17,7 +27,14 @@ if not api_key:
     exit(1)
 
 # Initialize client
-client = OpenAI(api_key=api_key, base_url=base_url)
+client = OpenAI(
+    api_key=api_key,
+    base_url=base_url,
+    default_headers={
+        "HTTP-Referer": "http://localhost:5173",
+        "X-Title": "AlgoArena",
+    } if "openrouter.ai" in base_url else {},
+)
 
 # Simple prompt for Manim code
 prompt = """Generate ONLY simple Manim Python code. NO explanations.
@@ -38,7 +55,7 @@ Requirements:
 Generate code now:"""
 
 try:
-    print("🚀 Sending request to NVIDIA API...\n")
+    print("🚀 Sending request to LLM provider...\n")
     
     response = client.chat.completions.create(
         model=model,
@@ -51,7 +68,7 @@ try:
     code = response.choices[0].message.content.strip()
     
     print("="*80)
-    print("📝 RAW RESPONSE FROM NVIDIA:")
+    print("📝 RAW RESPONSE FROM LLM PROVIDER:")
     print("="*80)
     print(code)
     print("="*80 + "\n")

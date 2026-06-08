@@ -93,7 +93,12 @@ VITE_API_KEY=<gemini_api_key>
 
 ```env
 GEMINI_API_KEY=<gemini_api_key>
+OPENAI_API_KEY=<openai_compatible_api_key>
+OPENAI_BASE_URL=https://openrouter.ai/api/v1
+OPENAI_MODEL=openai/gpt-4o-mini
 ```
+
+`OPENAI_BASE_URL` and `OPENAI_MODEL` can point to any OpenAI-compatible provider. For NVIDIA, use `https://integrate.api.nvidia.com/v1` with a model available to your NVIDIA key. Keep only one `OPENAI_API_KEY` entry in the file so an old key does not override the valid one.
 
 ## Local Development
 
