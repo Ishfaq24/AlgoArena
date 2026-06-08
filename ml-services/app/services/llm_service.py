@@ -1,25 +1,48 @@
 import os
 import json
 import re
+from pathlib import Path
 from dotenv import load_dotenv
 from openai import OpenAI
 
 load_dotenv()
+load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
 
 class LLMServiceManager:
     """Generates high-quality Manim animation code with visual storytelling"""
 
     def __init__(self):
-        self.api_key = os.getenv("OPENAI_API_KEY", "").strip()
-        self.base_url = "https://integrate.api.nvidia.com/v1"
-        self.model = "google/gemma-4-31b-it"
+        self.base_url = os.getenv("OPENAI_BASE_URL", "https://integrate.api.nvidia.com/v1").strip()
+        self.api_key = (
+            os.getenv("OPENAI_API_KEY", "").strip()
+            or os.getenv("OPENROUTER_API_KEY", "").strip()
+            or os.getenv("NVIDIA_API_KEY", "").strip()
+        )
+        self.model = os.getenv("OPENAI_MODEL", "").strip() or self._default_model_for_base_url(self.base_url)
 
         if not self.api_key:
-            raise ValueError("❌ OPENAI_API_KEY not found")
+            raise ValueError("OPENAI_API_KEY not found")
 
-        self.client = OpenAI(api_key=self.api_key, base_url=self.base_url)
-        print("✅ LLM Service initialized")
+        self.client = OpenAI(
+            api_key=self.api_key,
+            base_url=self.base_url,
+            default_headers=self._default_headers_for_base_url(self.base_url),
+        )
+        print(f"LLM Service initialized with base_url={self.base_url}, model={self.model}")
+
+    def _default_model_for_base_url(self, base_url: str) -> str:
+        if "openrouter.ai" in base_url:
+            return "openai/gpt-4o-mini"
+        return "google/gemma-4-31b-it"
+
+    def _default_headers_for_base_url(self, base_url: str) -> dict:
+        if "openrouter.ai" in base_url:
+            return {
+                "HTTP-Referer": "http://localhost:5173",
+                "X-Title": "AlgoArena",
+            }
+        return {}
 
     def generate_manim_video_code(self, topic: str) -> str:
         """Generate COMPLETE Manim code with strong visual storytelling"""

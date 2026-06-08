@@ -1,4 +1,4 @@
-import React from "https://esm.sh/react@19.2.4";
+import React from "react";
 import { GeminiModel } from "../../types.js";
 
 export const Header = ({
@@ -11,8 +11,6 @@ export const Header = ({
 }) => {
   return (
     <header className="sticky top-0 z-10 h-16 bg-base-100 border-b border-base-200 flex items-center justify-between px-4 sm:px-6">
-      
-      {/* LEFT SECTION */}
       <div className="flex items-center gap-4 min-w-0">
         <button
           onClick={onToggleSidebar}
@@ -37,35 +35,35 @@ export const Header = ({
 
         <div className="flex flex-col min-w-0">
           <h2 className="text-sm font-semibold text-base-content truncate">
-            {activeThread?.title || "AlgoArena AI"}
+            {activeThread?.title || "New chat"}
           </h2>
 
           <div className="flex items-center gap-1.5">
             <span
               className={`w-1.5 h-1.5 rounded-full ${
-                isDbConnected
-                  ? "bg-emerald-500"
-                  : "bg-amber-500 animate-pulse"
+                isDbConnected ? "bg-emerald-500" : "bg-amber-500 animate-pulse"
               }`}
             />
             <span className="text-[9px] text-base-content/60 uppercase tracking-widest font-bold">
-              {isDbConnected ? "Database Connected" : "Connecting..."}
+              {isDbConnected ? "Saved locally" : "Connecting"}
             </span>
           </div>
         </div>
       </div>
 
-      {/* RIGHT SECTION */}
-      <div className="flex items-center gap-2">
-        <select
-          value={selectedModel}
-          onChange={(e) => onModelChange(e.target.value)}
-          className="bg-base-100 border border-base-200 text-[11px] font-medium text-base-content/80 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-primary transition-all cursor-pointer appearance-none text-center min-w-[120px]"
-        >
-          <option value={GeminiModel.FLASH}>Algo 3 Flash</option>
-          <option value={GeminiModel.PRO}>Algo 3 Pro</option>
-        </select>
-      </div>
+      <select
+        value={selectedModel}
+        onChange={(e) => onModelChange(e.target.value)}
+        className="
+          bg-base-100 border border-base-300 text-[11px] font-medium
+          text-base-content/80 rounded-lg px-2 py-1.5
+          focus:outline-none focus:ring-1 focus:ring-emerald-500
+          transition-all cursor-pointer appearance-none text-center min-w-[120px]
+        "
+      >
+        <option value={GeminiModel.FLASH}>Algo 3 Flash</option>
+        <option value={GeminiModel.PRO}>Algo 3 Pro</option>
+      </select>
     </header>
   );
 };
