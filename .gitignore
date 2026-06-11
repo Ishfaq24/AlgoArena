@@ -1,4 +1,77 @@
-node_modules
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Environment and secrets
 .env
-.vscode
-tatus
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+
+# Build output
+dist/
+**/dist/
+build/
+**/build/
+dist-ssr/
+**/dist-ssr/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+vite-dev.*.log
+
+# Python caches and virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+env/
+ENV/
+
+# Generated runtime files
+media/
+**/media/
+generated/
+**/generated/
+uploads/
+**/uploads/
+
+# Local tool caches
+.cache/
+.parcel-cache/
+.vite/
+.turbo/
+.next/
+.nuxt/
+
+# Editors and operating systems
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
